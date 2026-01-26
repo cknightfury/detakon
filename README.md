@@ -12,6 +12,8 @@
 
 ## Installation
 
+NOTE: Currently in pre-release.  Not for actual usage.
+
 ```console
 pip install detakon
 ```
