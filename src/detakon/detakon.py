@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+from io import IOBase, TextIOWrapper
+from types import GeneratorType
 
 class Detakon():
     """detakon uses a detakon map to convert data."""
@@ -9,7 +11,7 @@ class Detakon():
         
         :param self: Object reference.
         :param detamap: detamap location that describes field mappings, default values, and operations to perform on data.
-        :param source: Source to input.
+        :param source: Source to input.  See load_source method for accepted types.
         :param destination: Destination to output.
         :param sdtype: Source data format type. Defaults to CSV.
         :type sdtype: str
@@ -19,19 +21,30 @@ class Detakon():
         :param kargs: Addtional flags.
         """
         self.detamap = self.load_detamap(detamap)
-        self.source = self.load_source_string(source) # see note in method pass
+        self.source = self.load_source(source) # see note in method pass
 
-    def load_source_string(self, source) -> str:
+    def load_source(self, source) -> str:
         """
-        Validate source as file path, and return as string.
+        Validate source type, and return a generator object if possible, otherwise return full object in accepted format.
+
+        Intent to add remote file, or result of API calls - giving consideration to add ability, or require calling application to submit data directly.
         
         :param self: Object reference.
-        :param source: File path.
+        :param source: Source data.  File as string, Path object, or an opened file object.  Also can accept string object of CSV (comma or tab delimited), or JSON.
         :return: File path as string.
         :rtype: str
         """
         # Thoughts: Accept file or generator object reference - rely on caller to supply data stream if not a file.
-        pass # Halted development - reconsideration for how to additionally accept non-file streams
+        # Halted development - reconsideration for how to additionally accept non-file streams
+        if isinstance (source, Path):
+            pass
+        elif isinstance(source, TextIOWrapper):
+            pass
+        elif isinstance(source, str):
+            if Path(source).exists() and Path(source).is_file():
+                pass
+        else:
+            pass
 
     def load_detamap(self, detamap) -> dict:
         """
