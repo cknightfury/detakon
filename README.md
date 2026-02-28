@@ -18,6 +18,18 @@ NOTE: Currently in pre-release.  Current status is: Minimal viable product for C
 pip install detakon
 ```
 
+## Usage
+
+Detakon(detamap, source, destination)
+
+Sample:
+
+```
+from detakon import Detakon
+
+Detakon(invoice_detamap.json, "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
+```
+
 ## Detamap Files
 
 A detamap configuration file is used to provide all details necessary for the data conversion.
