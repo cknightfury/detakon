@@ -9,6 +9,8 @@
 
 - [Installation](#installation)
 - [License](#license)
+- [Usage](#usage)
+- [Detamap Files](#detamap-files)
 
 ## Installation
 
@@ -86,7 +88,7 @@ A detamap JSON file may look similar to:
 }
 ```
 
-Above sample is not all-inclusive.  Detamaps, source data, and output expect full chain of custody.  No security guarantees are made in regards to untrusted or malformed data.
+Above sample is not all-inclusive.  Detamaps, source data, and output expect full chain of custody.  No security guarantees are made. Users are advised not to use untrusted, or malformed data.
 
 ## License
 
