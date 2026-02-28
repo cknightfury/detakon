@@ -27,7 +27,7 @@ Sample:
 ```
 from detakon import Detakon
 
-Detakon(invoice_detamap.json, "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
+Detakon("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
 ```
 
 ## Detamap Files
