@@ -48,7 +48,6 @@ class Detakon():
                         newline=output_info.get("newline", None)) as file:
                 csv_writer = DictWriter(file,
                             fieldnames=self.detamap["Fields"],
-                            # restkey=output_info.get("restkey", None),
                             restval=output_info.get("restval", ""),
                             extrasaction=output_info.get("extrasaction", "raise"),
                             dialect=output_info.get("dialect", "excel"),
