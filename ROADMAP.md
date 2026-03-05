@@ -1,5 +1,9 @@
 # Roadmap
 
+This Document is simply for planning purposes.  There is no associated timeline, or order.
+
+Some items may be large future features, intent to make a minor change in a future coding session, or notes putting something on hold while consider how I want to handle something.
+
 ## Planned
 > [!NOTE]
 > Essentials for 1.0 release - any changes before 1.0 are not guaranteed to not be breaking changes.
@@ -13,6 +17,7 @@
 - Add handling for non-CSV files
 
 ## Wishlist
+> [!NOTE]
 > Big WISHLIST down the line, may not actually do, as not essential to current needs.
 > Would like to minimize third party library uage for security purposes.  May not incorporate some of these features due to security or technical reasons.
 
