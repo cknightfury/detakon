@@ -5,6 +5,8 @@
 
 -----
 
+## Description
+
 A data converter than uses configuration maps (referred to as detamaps) to map fields in the source data to output data, and perform operations on the data before outputting.  Detamaps may also contain configuration data for the data source and output, and defaults to use if fields are missing, or blank/empty.
 
 > [!NOTE]
@@ -15,9 +17,9 @@ A data converter than uses configuration maps (referred to as detamaps) to map f
 ## Table of Contents
 
 - [Installation](#installation)
-- [License](#license)
 - [Usage](#usage)
 - [Detamap Files](#detamap-files)
+- [License](#license)
 
 ## Installation
 
