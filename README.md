@@ -31,6 +31,7 @@ pip install detakon
 
 > [!WARNING]
 > Status: Currently in pre-release, as minimal viable product for CSV to CSV conversions only.  Not for usage in production systems, breaking changes are coming in future releases.
+> Some planned changes can be viewed in the [ROADMAP.md](https://github.com/cknightfury/detakon/blob/main/ROADMAP.md) file.
 
 Detakon(detamap, source, destination)
 
