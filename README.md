@@ -23,13 +23,14 @@ A data converter than uses configuration maps (referred to as detamaps) to map f
 
 ## Installation
 
-NOTE: Currently in pre-release.  Current status is: Minimal viable product for CSV to CSV conversions only.  Not for usage in production systems.
-
 ```console
 pip install detakon
 ```
 
 ## Usage
+
+> [!WARNING]
+> Status: Currently in pre-release, as minimal viable product for CSV to CSV conversions only.  Not for usage in production systems, breaking changes are coming in future releases.
 
 Detakon(detamap, source, destination)
 
