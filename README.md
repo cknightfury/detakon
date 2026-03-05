@@ -5,6 +5,13 @@
 
 -----
 
+A data converter than uses configuration maps (referred to as detamaps) to map fields in the source data to output data, and perform operations on the data before outputting.  Detamaps may also contain configuration data for the data source and output, and defaults to use if fields are missing, or blank/empty.
+
+> [!NOTE]
+> Detakon is in early development and may have breaking changes between versions.  Detamaps, methods, and usage may change between minor versions until version 1.0 release.
+> After version 1.0 release, any breaking changes will result in a major version bump.
+> Recommended to use PyPI version. Version in source code is next planned release on PyPI, and is not official until pushed to PyPI.
+
 ## Table of Contents
 
 - [Installation](#installation)
