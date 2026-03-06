@@ -17,22 +17,40 @@ class Detakon():
         :param args: Additional parameters.
         :param kargs: Addtional flags.
         """
+        self.original_detamap = detamap
         self.detamap: dict = self.load_detamap(detamap)
         self.mappings: dict = self.detamap["Mappings"]
+        self.defaults: dict = self.detamap.get("Defaults", dict())
+        self.operations: dict = self.detamap.get("Operations", dict())
+        self.source_info: dict = self.detamap["Source"]
+        self.output_info: dict = self.detamap["Output"]
         self.source = source
         self.destination = destination
+
+    def reload_detamap(self, detamap):
+        """
+        For interactive sessions to change the detamap. If original detamap was an external source (such as a file), self.original_detamap may be passed to reload with changes."""
+        self.detamap: dict = self.load_detamap(detamap)
+        self.mappings: dict = self.detamap["Mappings"]
+        self.defaults: dict = self.detamap.get("Defaults", dict())
+        self.operations: dict = self.detamap.get("Operations", dict())
+        self.source_info: dict = self.detamap["Source"]
+        self.output_info: dict = self.detamap["Output"]
+
+    def convert(self):
+        """
+        Convert current source data using current detamap and destination.
+        """
         data_generator = self.source_reader()
-        output_info: dict = self.detamap["Output"]
-        output = output_info["argument"]
 
         # branch to determine output method called based on detamap.Output.argument for destination parameter
         # filepath as either string or Path object 
-        if output == "filepath":
-            if output_info["type"] == "str":
+        if self.output_info["argument"] == "filepath":
+            if self.output_info["type"] == "str":
                 self.destination = Path(self.destination)
 
             # if not appending to existing file, delete if file exists and create new empty file
-            if not output_info.get("append", False) and self.destination.exists() and self.destination.is_file():
+            if not self.output_info.get("append", False) and self.destination.exists() and self.destination.is_file():
                 self.destination.unlink()
 
             if self.destination.exists() and self.destination.is_file():
@@ -42,32 +60,32 @@ class Detakon():
             self.destination.touch()
 
             with self.destination.open(mode="a",
-                        buffering=output_info.get("buffering", -1),
-                        encoding=output_info.get("encoding", "utf-8"),
-                        errors=output_info.get("errors", None),
-                        newline=output_info.get("newline", None)) as file:
+                        buffering=self.output_info.get("buffering", -1),
+                        encoding=self.output_info.get("encoding", "utf-8"),
+                        errors=self.output_info.get("errors", None),
+                        newline=self.output_info.get("newline", None)) as file:
                 csv_writer = DictWriter(file,
-                            fieldnames=self.detamap["Fields"],
-                            restval=output_info.get("restval", ""),
-                            extrasaction=output_info.get("extrasaction", "raise"),
-                            dialect=output_info.get("dialect", "excel"),
-                            delimiter=output_info.get("delimiter", ","),
-                            quotechar=output_info.get("quotechar", '"'),
-                            escapechar=output_info.get("escapechar", None),
-                            doublequote=output_info.get("doublequote", True),
-                            skipinitialspace=output_info.get("skipinitialspace", False),
-                            lineterminator=output_info.get("lineterminator", "\r\n"),
-                            quoting=output_info.get("quoting", 0),
-                            strict=output_info.get("strict", False))
+                            fieldnames=self.output_info.get("fields"),
+                            restval=self.output_info.get("restval", ""),
+                            extrasaction=self.output_info.get("extrasaction", "raise"),
+                            dialect=self.output_info.get("dialect", "excel"),
+                            delimiter=self.output_info.get("delimiter", ","),
+                            quotechar=self.output_info.get("quotechar", '"'),
+                            escapechar=self.output_info.get("escapechar", None),
+                            doublequote=self.output_info.get("doublequote", True),
+                            skipinitialspace=self.output_info.get("skipinitialspace", False),
+                            lineterminator=self.output_info.get("lineterminator", "\r\n"),
+                            quoting=self.output_info.get("quoting", 0),
+                            strict=self.output_info.get("strict", False))
                 
-                if new_file and not output_info.get("omit_heading", False):
+                if new_file and not self.output_info.get("omit_heading", False):
                     csv_writer.writeheader()
                 for entry in data_generator:
                     row_data = {}
                     for source_field, destination_field in self.mappings.items():
                         row_data[destination_field] = entry[source_field]
                     csv_writer.writerow(row_data)
-        elif output == "return":
+        elif self.output_info["argument"] == "return":
             pass
 
     def source_reader(self):
