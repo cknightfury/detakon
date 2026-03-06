@@ -40,7 +40,8 @@ Sample:
 ```
 from detakon import Detakon
 
-Detakon("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
+converter = Detakon("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
+converter.convert()
 ```
 
 ## Detamap Files
@@ -50,7 +51,6 @@ A detamap configuration file is used to provide all details necessary for the da
 A datamap must be a Python dictionary, or convertable to a Python dictionary.  Currently this means either a dictionary or JSON file (plans to add TOML support).
 
 A detamap MUST include the following key:value pairs:
-- "Fields" as a list of strings corresponding to the output field names in the desired order.
 - "Mappings" with a sub-dictionary of source data field names as keys, mapped to output field names as values.
 - "Defaults" with a sub-dictionary of output field names that will supply a default value if either: (not currently implemented)
     - Matching field was not found in source.
@@ -62,12 +62,12 @@ A detamap MUST include the following key:value pairs:
         - "argument" as type of argument being passed as the source argument to the Detakon initializer. Accepted values: "filepath".
             - "type" key may be required depending on the argument being passed.
 - "Output" with a sub-dictionary that defines the type of output expected, and the arguments to pass to Path.open() if destination is a file, or csv.DictReader if output is CSV data. 
+    - "fields" sub-key as a list of strings corresponding to the output field names in the desired order.
 
 A detamap JSON file may look similar to:
 
 ```
 {
-    "Fields": ["External Order ID", "Last Name", "First Name", "DOB"],
     "Mappings": {
         "Invoice #": "External Order ID",
         "Client Last Name": "Last Name",
@@ -88,6 +88,7 @@ A detamap JSON file may look similar to:
         "delimiter": ","
     },
     "Output": {
+        "fields": ["External Order ID", "Last Name", "First Name", "DOB"],
         "argument": "filepath",
         "type": "str",
         "append": false,
