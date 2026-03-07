@@ -134,6 +134,12 @@ class Detakon():
                                                 quoting=source_info.get("quoting", 0),
                                                 strict=source_info.get("strict", False))
                         for row in csv_reader:
+                            # insert default values if key missing or value is empty string
+                            for key, value in self.defaults.items():
+                                if key not in row:
+                                    row[key] = value
+                                elif row[key] == "":
+                                    row[key] = value
                             yield row
 
         # elif isinstance(source, TextIOWrapper):
