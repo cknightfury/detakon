@@ -11,7 +11,7 @@ Some items may be large future features, intent to make a minor change in a futu
 
 - ~~Move \__init__ operations to separate callable method, instead of auto-running conversion upon object consideration.~~
 - ~~Move Fields key in detamap to required sub-key in Output.~~
-- Add default processing
+- ~~Add default processing~~
 - Add operations
     - Include sub-key to argument to determine if performed during reading from source, or on data being output (specifically more important in determining if field matching needs to use field names from source or output).
     - Add weights system for operation order
