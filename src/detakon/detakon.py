@@ -138,7 +138,7 @@ class Detakon():
                             for key, value in self.defaults.items():
                                 if key not in row:
                                     row[key] = value
-                                elif row[key] == "":
+                                elif row[key] == "" or row[key] == None:
                                     row[key] = value
                             yield row
 
