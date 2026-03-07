@@ -52,7 +52,7 @@ A datamap must be a Python dictionary, or convertable to a Python dictionary.  C
 
 A detamap MUST include the following key:value pairs:
 - "Mappings" with a sub-dictionary of source data field names as keys, mapped to output field names as values.
-- "Defaults" with a sub-dictionary of output field names that will supply a default value if either: (not currently implemented)
+- "Defaults" with a sub-dictionary of source field names that will supply a default value if either: (not currently implemented)
     - Matching field was not found in source.
     - Matching source data was empty, such as an empty string.
 - "Operations" with a sub-dictionary of operations to perform on output data: (not currently implemented)
