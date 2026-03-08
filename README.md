@@ -38,7 +38,7 @@ Detakon(detamap, source, destination)
 Sample:
 
 ```
-from detakon import Detakon
+from detakon.detakon import Detakon
 
 converter = Detakon("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
 converter.convert()
