@@ -87,10 +87,11 @@ A detamap JSON file may look similar to:
         "Postal Code": "00000"
     },
     "Operations": [
-        {"convertValue": {"arguments": {
+        {"convertValue": {"fields": "Country",
+                        "arguments": {
                             "United States of America": "USA",
-                            "Antarctica (the territory South of 60 deg S)": "Antarctica"},
-                        "fields": "Country"}
+                            "Antarctica (the territory South of 60 deg S)": "Antarctica"}
+                        }
                     },
         {"strip": {"fields": "*"}},
         {"strip": {"arguments": "+1-", "fields": ["Phone 1", "Phone 2"]}},
