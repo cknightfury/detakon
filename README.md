@@ -69,16 +69,29 @@ A detamap JSON file may look similar to:
 ```
 {
     "Mappings": {
-        "Invoice #": "External Order ID",
-        "Client Last Name": "Last Name",
-        "Client First Name": "First Name",
-        "Date of Birth": "DOB"
+        "Customer Id": "External ID",
+        "First Name": "First Name",
+        "Last Name": "Last Name",
+        "Company": "Company",
+        "Country": "Country",
+        "Phone 1": "Phone",
+        "Phone 2": "Cell",
+        "Email": "Email",
+        "Website": "URL",
+        "Postal Code": "Zip"
     },
     "Defaults": {
-        "DOB": "Unknown"
+        "Postal Code": "00000"
     },
     "Operations": {
-        "upper": ["External Order ID", "Last Name", "First Name"]
+        "priority": {"upper": 90,
+                    "convertValue": 100,
+                    "strip": 110},
+        "upper": ["Email", "Last Name", "First Name"],
+        "convertValue": {"Country": {
+            "United States of America": "USA"
+        }},
+        "strip": {"Phone 1": ["None", "+1-"]}
     },
     "Source": {
         "argument": "filepath",
@@ -88,7 +101,7 @@ A detamap JSON file may look similar to:
         "delimiter": ","
     },
     "Output": {
-        "fields": ["External Order ID", "Last Name", "First Name", "DOB"],
+        "fields": ["External ID", "Company", "Last Name", "First Name", "Country", "Zip", "Phone", "Cell", "Email", "URL"],
         "argument": "filepath",
         "type": "str",
         "append": false,
