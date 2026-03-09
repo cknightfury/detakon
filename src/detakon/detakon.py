@@ -86,7 +86,8 @@ class Detakon():
                         row_data[destination_field] = entry[source_field]
                     csv_writer.writerow(row_data)
         elif self.output_info["argument"] == "return":
-            pass
+            "Hello".strip()
+            
 
     def source_reader(self):
         """
@@ -99,40 +100,44 @@ class Detakon():
         :return: File path as string.
         :rtype: str
         """
-        # get source information from detamap
-        source_info: dict = self.detamap["Source"]
+        # get order of operations based on priority values
+        priority: dict = self.operations.get("priority", dict())
+        for key, value in self.operations.items():
+            if not key == "priority":
+                priority.setdefault(key, 0)
+        priority = sorted(priority, key=priority.get, reverse=True)
 
         # branch based on source.argument value provided in detamap
 
         # handler for source.argument being a filepath
         # filepath must be either a string to a file, or a Path object for a file.
-        if source_info["argument"] == "filepath":
-            if source_info["type"] == "str":
+        if self.source_info["argument"] == "filepath":
+            if self.source_info["type"] == "str":
                 self.source = Path(self.source)
             if self.source.exists() and self.source.is_file():
                 with self.source.open(mode='r',
-                                        buffering=source_info.get("buffering", -1),
-                                        encoding=source_info.get("encoding", "utf-8"),
-                                        errors=source_info.get("errors", None),
-                                        newline=source_info.get("newline", None)) as source_file:
+                                        buffering=self.source_info.get("buffering", -1),
+                                        encoding=self.source_info.get("encoding", "utf-8"),
+                                        errors=self.source_info.get("errors", None),
+                                        newline=self.source_info.get("newline", None)) as source_file:
                     # handler for source.format csv values.  if no source.format value is provided, csv value is default
-                    if source_info.get("format", "csv") == "csv":
+                    if self.source_info.get("format", "csv") == "csv":
                         # DictReader defaults are used if Source does not contain a key for a given keyword.
                         # key:value paris can be provided in the detamap Source section to set the value of any DictReader keyword.
                         # values must conform with DictReader's expectation.
                         csv_reader = DictReader(source_file,
-                                                fieldnames=source_info.get("fieldnames", None),
-                                                restkey=source_info.get("restkey", None),
-                                                restval=source_info.get("restval", None),
-                                                dialect=source_info.get("dialect", "excel"),
-                                                delimiter=source_info.get("separator", ","),
-                                                quotechar=source_info.get("quotechar", '"'),
-                                                escapechar=source_info.get("escapechar", None),
-                                                doublequote=source_info.get("doublequote", True),
-                                                skipinitialspace=source_info.get("skipinitialspace", False),
-                                                lineterminator=source_info.get("lineterminator", "\r\n"),
-                                                quoting=source_info.get("quoting", 0),
-                                                strict=source_info.get("strict", False))
+                                                fieldnames=self.source_info.get("fieldnames", None),
+                                                restkey=self.source_info.get("restkey", None),
+                                                restval=self.source_info.get("restval", None),
+                                                dialect=self.source_info.get("dialect", "excel"),
+                                                delimiter=self.source_info.get("separator", ","),
+                                                quotechar=self.source_info.get("quotechar", '"'),
+                                                escapechar=self.source_info.get("escapechar", None),
+                                                doublequote=self.source_info.get("doublequote", True),
+                                                skipinitialspace=self.source_info.get("skipinitialspace", False),
+                                                lineterminator=self.source_info.get("lineterminator", "\r\n"),
+                                                quoting=self.source_info.get("quoting", 0),
+                                                strict=self.source_info.get("strict", False))
                         for row in csv_reader:
                             # insert default values if key missing or value is empty string
                             for key, value in self.defaults.items():
@@ -140,6 +145,8 @@ class Detakon():
                                     row[key] = value
                                 elif row[key] == "" or row[key] == None:
                                     row[key] = value
+                                # process operations
+
                             yield row
 
         # elif isinstance(source, TextIOWrapper):
