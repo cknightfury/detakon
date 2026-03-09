@@ -55,8 +55,11 @@ A detamap MUST include the following key:value pairs:
 - "Defaults" with a sub-dictionary of source field names that will supply a default value if either: (not currently implemented)
     - Matching field was not found in source.
     - Matching source data was empty, such as an empty string.
-- "Operations" with a sub-dictionary of operations to perform on output data: (not currently implemented)
-    - Example opersations may be "upper", or "convertValue".
+- "Operations" with a list of operations to perform on source data: (not currently implemented)
+    - Example operations may be "upper", "convertValue", "strip", etc.
+    - Operations entries are provided as dictionaries with sub-dictionaries for the fields the operations are to be performed on (single string value, list of strings, or "*" to indicate all fields) and an arguments key that contains arguments and/or parameters to pass.
+    - Operations are performed in order they appear in the list.
+    - Operations may be listed multiple times with different argument and field values.
 - "Source" with a sub-dictionary that defines the type of source being passed, and the arguments to pass to Path.open() if source is a file, or csv.DictReader if source is CSV data.
     - Required keys:
         - "argument" as type of argument being passed as the source argument to the Detakon initializer. Accepted values: "filepath".
@@ -83,16 +86,16 @@ A detamap JSON file may look similar to:
     "Defaults": {
         "Postal Code": "00000"
     },
-    "Operations": {
-        "priority": {"upper": 90,
-                    "convertValue": 100,
-                    "strip": 110},
-        "upper": ["Email", "Last Name", "First Name"],
-        "convertValue": {"Country": {
-            "United States of America": "USA"
-        }},
-        "strip": {"Phone 1": ["None", "+1-"]}
-    },
+    "Operations": [
+        {"convertValue": {"arguments": {
+                            "United States of America": "USA",
+                            "Antarctica (the territory South of 60 deg S)": "Antarctica"},
+                        "fields": "Country"}
+                    },
+        {"strip": {"fields": "*"}},
+        {"strip": {"arguments": "+1-", "fields": ["Phone 1", "Phone 2"]}},
+        {"upper": {"fields": ["Email", "Last Name", "First Name"]}}
+    ],
     "Source": {
         "argument": "filepath",
         "type": "str",

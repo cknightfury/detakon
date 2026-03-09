@@ -86,8 +86,7 @@ class Detakon():
                         row_data[destination_field] = entry[source_field]
                     csv_writer.writerow(row_data)
         elif self.output_info["argument"] == "return":
-            "Hello".strip()
-            
+            pass
 
     def source_reader(self):
         """
@@ -100,13 +99,6 @@ class Detakon():
         :return: File path as string.
         :rtype: str
         """
-        # get order of operations based on priority values
-        priority: dict = self.operations.get("priority", dict())
-        for key, value in self.operations.items():
-            if not key == "priority":
-                priority.setdefault(key, 0)
-        priority = sorted(priority, key=priority.get, reverse=True)
-
         # branch based on source.argument value provided in detamap
 
         # handler for source.argument being a filepath
