@@ -3,6 +3,7 @@ from pathlib import Path
 from io import IOBase, TextIOWrapper
 from types import GeneratorType
 from csv import DictReader, DictWriter
+from operator import methodcaller
 
 class Detakon():
     """detakon uses a detakon map to convert data."""
@@ -132,13 +133,9 @@ class Detakon():
                                                 strict=self.source_info.get("strict", False))
                         for row in csv_reader:
                             # insert default values if key missing or value is empty string
-                            for key, value in self.defaults.items():
-                                if key not in row:
-                                    row[key] = value
-                                elif row[key] == "" or row[key] == None:
-                                    row[key] = value
-                                # process operations
-
+                            row = self.process_defaults(row)
+                            # process operations
+                            row = self.process_operations(row)
                             yield row
 
         # elif isinstance(source, TextIOWrapper):
@@ -152,6 +149,19 @@ class Detakon():
         #     pass
         # else:
         #     raise ValueError("Source could not be determined.")
+
+    def process_defaults(self, row):
+        """Add default values to any missing column or empty string."""
+        for key, value in self.defaults.items():
+            if key not in row:
+                row[key] = value
+            elif row[key] == "" or row[key] == None:
+                row[key] = value
+        return row
+    
+    def process_operations(self, row):
+        """Process all operations from self.operations in order that operations appear in list."""
+        return row
 
     def load_detamap(self, detamap) -> dict:
         """
