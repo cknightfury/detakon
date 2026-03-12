@@ -190,6 +190,8 @@ class Detakon():
                     pass
                 elif operation == "formatTime":
                     pass
+                elif operation == "filter":
+                    pass
 
         # print("---------Start Data Output ------------")
         # for key, value in row.items():
