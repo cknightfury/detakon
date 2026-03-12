@@ -161,7 +161,31 @@ class Detakon():
     
     def process_operations(self, row):
         """Process all operations from self.operations in order that operations appear in list."""
-        return row
+        for entry in self.operations:
+            for operator, info in entry.items():
+                operation = operator
+                fields = info.get("fields")
+                arguments = tuple(info.get("arguments", []))
+
+            # process string operations
+            if operation in dir(str):
+                if fields == "*":
+                    for key, value in row.items():
+                        row[key] = getattr(value, operation)(*arguments)
+                elif isinstance(fields, str):
+                    row[fields] = getattr(row[fields], operation(*arguments))
+                else:
+                    for field in fields:
+                        row[field] = getattr(row[field], operation)(*arguments)
+
+
+
+
+
+        # print("---------Start Data Output ------------")
+        # for key, value in row.items():
+        #     print(f"{key}: {value} - Type: {type(value)}")
+        # return row
 
     def load_detamap(self, detamap) -> dict:
         """
