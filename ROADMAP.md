@@ -13,8 +13,10 @@ Some items may be large future features, intent to make a minor change in a futu
 - ~~Move Fields key in detamap to required sub-key in Output.~~
 - ~~Add default processing~~
 - Add operations
-    - Include sub-key to argument to determine if performed during reading from source, or on data being output (specifically more important in determining if field matching needs to use field names from source or output).
-    - Add weights system for operation order
+    - Status:
+        - Added all python string methods (if operation matches a string method, it will be used)
+        - Added slice operation.  Argument list should be [start, stop[, step]].  Uses python's slice object.
+            - Arguments should be integers, but the string "None" can be passed in cases where the default (omitting) the value is desired, and will be converted to None value.
 - Add detaplexing
 - Add detapipes
 - Add TOML support for detamaps
