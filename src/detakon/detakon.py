@@ -172,11 +172,14 @@ class Detakon():
                 arguments = tuple(info.get("arguments", []))
 
             # process string operations
-            if operation in dir(str):
-                for field in fields:
-                        print(f"before {operation}: {row[field]}")
-                        row[field] = getattr(row[field], operation)(*arguments)
-                        print(f"after: {row[field]}")
+            for field in fields:
+                if operation in dir(str):
+                    row[field] = getattr(row[field], operation)(*arguments)
+                elif operation == "slice":
+                    # print(f"before {operation}: {row[field]}")
+                    slice_object = slice(*(x if isinstance(x, int) else None for x in arguments))
+                    row[field] = row[field][slice_object]
+                    # print(f"after: {row[field]}")
 
         # print("---------Start Data Output ------------")
         # for key, value in row.items():
