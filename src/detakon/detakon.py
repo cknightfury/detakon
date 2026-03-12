@@ -185,7 +185,7 @@ class Detakon():
         # print("---------Start Data Output ------------")
         # for key, value in row.items():
         #     print(f"{key}: {value} - Type: {type(value)}")
-        # return row
+        return row
 
     def load_detamap(self, detamap) -> dict:
         """
