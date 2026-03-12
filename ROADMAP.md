@@ -18,7 +18,7 @@ Some items may be large future features, intent to make a minor change in a futu
         ~~- Arguments should be integers, but the string "None" can be passed in cases where the default (omitting) the value is desired, and will be converted to None value.~~
     - convert value mapping operation
     - format date / time / timestamp
-    - merge fields operation with delimiter options
+    - merge / split fields operation with delimiter options
 - Add detaplexing
 - Add detapipes
 - Add TOML support for detamaps

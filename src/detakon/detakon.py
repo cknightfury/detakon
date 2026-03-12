@@ -186,6 +186,8 @@ class Detakon():
                     pass
                 elif operation == "mergeFields":
                     pass
+                elif operation == "splitFields":
+                    pass
                 elif operation == "formatTime":
                     pass
 
