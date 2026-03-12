@@ -57,7 +57,7 @@ A detamap MUST include the following key:value pairs:
     - Matching source data was empty, such as an empty string.
 - "Operations" with a list of operations to perform on source data: (not currently implemented)
     - Example operations may be "upper", "convertValue", "strip", etc.
-    - Operations entries are provided as dictionaries with sub-dictionaries for the fields the operations are to be performed on (single string value, list of strings, or "*" to indicate all fields) and an arguments key that contains arguments either a single argument, or list of arguments to be passed (a dictionary may be passed as a single argument, if the operation expects a dictionary as the argument).
+    - Operations entries are provided as dictionaries with sub-dictionaries for the fields the operations are to be performed on (single string value, list of strings, or "*" to indicate all fields) and an arguments key that contains a list of arguments to be passed.  Arguments may be an empty list if no arguments. A dictionary may be passed as a single argument, if the operation expects a dictionary as the argument, but must be passed withing a list.
     - Operations are performed in order they appear in the list.
     - Operations may be listed multiple times with different argument and field values.
 - "Source" with a sub-dictionary that defines the type of source being passed, and the arguments to pass to Path.open() if source is a file, or csv.DictReader if source is CSV data.
@@ -88,13 +88,13 @@ A detamap JSON file may look similar to:
     },
     "Operations": [
         {"convertValue": {"fields": "Country",
-                        "arguments": {
+                        "arguments": [{
                             "United States of America": "USA",
-                            "Antarctica (the territory South of 60 deg S)": "Antarctica"}
+                            "Antarctica (the territory South of 60 deg S)": "Antarctica"}]
                         }
                     },
         {"strip": {"fields": "*"}},
-        {"strip": {"arguments": "+1-", "fields": ["Phone 1", "Phone 2"]}},
+        {"strip": {"arguments": ["+1-"], "fields": ["Phone 1", "Phone 2"]}},
         {"upper": {"fields": ["Email", "Last Name", "First Name"]}}
     ],
     "Source": {
