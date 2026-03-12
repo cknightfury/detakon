@@ -165,26 +165,23 @@ class Detakon():
             for operator, info in entry.items():
                 operation = operator
                 fields = info.get("fields")
+                if fields == "*":
+                    fields = row.keys()
+                elif isinstance(fields, str):
+                    fields = [fields]
                 arguments = tuple(info.get("arguments", []))
 
             # process string operations
             if operation in dir(str):
-                if fields == "*":
-                    for key, value in row.items():
-                        row[key] = getattr(value, operation)(*arguments)
-                elif isinstance(fields, str):
-                    row[fields] = getattr(row[fields], operation(*arguments))
-                else:
-                    for field in fields:
+                for field in fields:
+                        print(f"before {operation}: {row[field]}")
                         row[field] = getattr(row[field], operation)(*arguments)
-
-
-
-
+                        print(f"after: {row[field]}")
 
         # print("---------Start Data Output ------------")
         # for key, value in row.items():
         #     print(f"{key}: {value} - Type: {type(value)}")
+        # print("---------End Data Output ------------")
         return row
 
     def load_detamap(self, detamap) -> dict:
