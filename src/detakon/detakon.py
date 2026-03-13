@@ -176,14 +176,15 @@ class Detakon():
                 if operation in dir(str):
                     row[field] = getattr(row[field], operation)(*arguments)
                 elif operation == "slice":
-                    # print(f"before {operation}: {row[field]}")
                     slice_object = slice(*(x if isinstance(x, int) else None for x in arguments))
                     row[field] = row[field][slice_object]
+                elif operation == "hashmap":
+                    # print(f"before {operation}: {row[field]}")
+                    hashmap = arguments[0]
+                    if row[field] in hashmap.keys():
+                        row[field] = hashmap[row[field]]
                     # print(f"after: {row[field]}")
-
                 # below operations are place holders, and may change operation names during implementation
-                elif operation == "convertValue":
-                    pass
                 elif operation == "mergeFields":
                     pass
                 elif operation == "splitFields":
