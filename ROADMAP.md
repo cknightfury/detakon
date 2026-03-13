@@ -13,10 +13,10 @@ Some items may be large future features, intent to make a minor change in a futu
 - ~~Move Fields key in detamap to required sub-key in Output.~~
 - ~~Add default processing~~
 - Add operations
-    ~~- All python string methods (if operation matches a string method, it will be used)~~
-    ~~- Slice operation.  Argument list should be [start, stop[, step]].  Uses python's slice object.~~
-        ~~- Arguments should be integers, but the string "None" can be passed in cases where the default (omitting) the value is desired, and will be converted to None value.~~
-    - convert value mapping operation
+    - ~~All python string methods (if operation matches a string method, it will be used)~~
+    - ~~Slice operation.  Argument list should be [start, stop[, step]].  Uses python's slice object.~~
+        - ~~Arguments should be integers, but the string "None" can be passed in cases where the default (omitting) the value is desired, and will be converted to None value.~~
+    - ~~convert value mapping operation~~
     - format date / time / timestamp
     - merge / split fields operation with delimiter options
     - filter operation exclude / include

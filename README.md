@@ -87,7 +87,7 @@ A detamap JSON file may look similar to:
         "Postal Code": "00000"
     },
     "Operations": [
-        {"convertValue": {"fields": "Country",
+        {"hashmap": {"fields": "Country",
                         "arguments": [{
                             "United States of America": "USA",
                             "Antarctica (the territory South of 60 deg S)": "Antarctica"}]
