@@ -169,12 +169,13 @@ class Detakon():
                     fields = row.keys()
                 elif isinstance(fields, str):
                     fields = [fields]
-                arguments = tuple(info.get("arguments", []))
+                arguments = info.get("args", [])
+                keyword_arguments = info.get("kwargs", dict())
 
             for field in fields:
                 # process string operations
                 if operation in dir(str):
-                    row[field] = getattr(row[field], operation)(*arguments)
+                    row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
                 elif operation == "slice":
                     slice_object = slice(*(x if isinstance(x, int) else None for x in arguments))
                     row[field] = row[field][slice_object]
