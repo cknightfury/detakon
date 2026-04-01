@@ -177,10 +177,10 @@ class Detakon():
                 # process string operations
                 if operation in dir(str):
                     row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
-                elif operation == "slice":
+                elif operation.lower() in ["slice"]:
                     slice_object = slice(*(x if isinstance(x, int) else None for x in arguments))
                     row[field] = row[field][slice_object]
-                elif operation == "hashmap":
+                elif operation.lower() in ["hashmap", "dictionary", "dict"]:
                     # print(f"before {operation}: {row[field]}")
                     hashmap = arguments[0]
                     if row[field] in hashmap.keys():
@@ -194,10 +194,12 @@ class Detakon():
                     if not self.compare(row[field], *arguments):
                         return None
                     print(f"after: {row[field]}")
-                # below operations are place holders, and may change operation names during implementation
-                elif operation == "mergeFields":
+                elif operation.lower() in ["cast", "converttype", "convert type", "type cast", "typecast"]:
                     pass
-                elif operation == "splitFields":
+                # below operations are place holders, and may change operation names during implementation
+                elif operation.lower() in ["mergefields", "merge", "union"]:
+                    pass
+                elif operation.lower() in ["splitfields", "split", "separate"]:
                     pass
                 elif operation == "formatTime":
                     pass
