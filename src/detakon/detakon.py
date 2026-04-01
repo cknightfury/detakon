@@ -136,7 +136,8 @@ class Detakon():
                             row = self.process_defaults(row)
                             # process operations
                             row = self.process_operations(row)
-                            yield row
+                            if row is not None:
+                                yield row
 
         # elif isinstance(source, TextIOWrapper):
         #     pass
@@ -185,6 +186,14 @@ class Detakon():
                     if row[field] in hashmap.keys():
                         row[field] = hashmap[row[field]]
                     # print(f"after: {row[field]}")
+                elif operation == "exclude":
+                    if self.compare(row[field], *arguments):
+                        return None
+                elif operation == "include":
+                    print(f"before {operation}: {row[field]}")
+                    if not self.compare(row[field], *arguments):
+                        return None
+                    print(f"after: {row[field]}")
                 # below operations are place holders, and may change operation names during implementation
                 elif operation == "mergeFields":
                     pass
@@ -192,8 +201,7 @@ class Detakon():
                     pass
                 elif operation == "formatTime":
                     pass
-                elif operation == "filter":
-                    pass
+
 
         # print("---------Start Data Output ------------")
         # for key, value in row.items():
@@ -228,4 +236,30 @@ class Detakon():
                         return json.load(file)
             except Exception as e:
                 raise Exception(f"Failed to load JSON file: {e}")
-        
+
+    def compare(self, row_value, comparison: str, comparison_value) -> bool:
+        """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
+        Designed for use in exclude and include filter operations."""
+        if comparison.lower() in ["equal", "=", "==", "isequal", "is equal"]:
+            return row_value == comparison_value
+        elif comparison.lower() in ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]:
+            return row_value != comparison_value
+        elif comparison.lower() == "in":
+            return row_value in comparison_value
+        elif comparison_value in ["not in", "notin"]:
+            return row_value not in comparison_value
+        elif comparison.lower() in ["gt", "greaterthan", "greater than", ">"]:
+            return row_value > comparison_value
+        elif comparison.lower() in ["lt", "lessthan", "less than", "<"]:
+            return row_value < comparison_value
+        elif comparison.lower() in ["ge", "greater or equal", "greater than or equal", ">=", "≥"]:
+            return row_value >= comparison_value
+        elif comparison.lower() in ["le", "less or equal", "less than or equal", "<=", "≤"]:
+            return row_value <= comparison_value
+        elif comparison.lower() in ["bool", "boolean", "truthiness", "truthy", "falsy"]:
+            return bool(row_value)
+        elif comparison.lower() in ["isnone", "none"]:
+            return row_value is None
+        else:
+            raise ValueError(f"Could not find match for comparison operator: {comparison}")
+
