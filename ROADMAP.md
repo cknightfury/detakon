@@ -19,7 +19,7 @@ Some items may be large future features, intent to make a minor change in a futu
     - ~~convert value mapping operation~~
     - format date / time / timestamp
     - merge / split fields operation with delimiter options
-    - filter operation exclude / include
+    - ~~filter operation exclude / include~~
 - Add detaplexing
 - Add detapipes
 - Add TOML support for detamaps
