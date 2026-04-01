@@ -190,12 +190,10 @@ class Detakon():
                     if self.compare(row[field], *arguments):
                         return None
                 elif operation == "include":
-                    print(f"before {operation}: {row[field]}")
                     if not self.compare(row[field], *arguments):
                         return None
-                    print(f"after: {row[field]}")
                 elif operation.lower() in ["cast", "converttype", "convert type", "type cast", "typecast"]:
-                    pass
+                    row[field] = self.cast_type(row[field], arguments[0])
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:
                     pass
@@ -265,3 +263,15 @@ class Detakon():
         else:
             raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
+    def cast_type(self, value, type: str):
+        """Cast value into the given type.  If type does not match an expected value raise a ValueError."""
+        if type.lower() in ["int", "integer", "long"]:
+            return int(value)
+        elif type.lower() in ["float", "double"]:
+            return float(value)
+        elif type.lower() in ["bool", "boolean"]:
+            return bool(value)
+        elif type.lower() in ["str", "string"]:
+            return str(value)
+        else:
+            raise ValueError(f"Unrecognized type value for cast: {type}")
