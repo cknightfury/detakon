@@ -4,6 +4,7 @@ from io import IOBase, TextIOWrapper
 from types import GeneratorType
 from csv import DictReader, DictWriter
 from operator import methodcaller
+from decimal import Decimal
 
 class Detakon():
     """detakon uses a detakon map to convert data."""
@@ -269,6 +270,8 @@ class Detakon():
             return int(value)
         elif type.lower() in ["float", "double"]:
             return float(value)
+        elif type.lower() == "decimal":
+            return Decimal(value)
         elif type.lower() in ["bool", "boolean"]:
             return bool(value)
         elif type.lower() in ["str", "string"]:
