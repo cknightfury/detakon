@@ -252,7 +252,7 @@ class Detakon():
             return row_value == comparison_value
         elif comparison.lower() in ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]:
             return row_value != comparison_value
-        elif comparison.lower() == "in":
+        elif comparison.lower() in ["in", "contains", "substring"]:
             return row_value in comparison_value
         elif comparison_value in ["not in", "notin"]:
             return row_value not in comparison_value
