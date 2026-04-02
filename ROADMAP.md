@@ -25,6 +25,8 @@ Some items may be large future features, intent to make a minor change in a futu
         - binary between a field and a detamap provided value (such as multiply decimal "Percent" field by 100)
     - ~~cast operation to type cast a field~~
         - ~~example: cast values to int or float before using an include or exclude filter for values < or > a given value.~~
+    - ~~create new field operation~~
+        - ~~Defaults section typically preferred, but create operation can be used to create fields needed for a users sequence of operations.~~
 - Add detaplexing
 - Add detapipes
 - Add TOML support for detamaps
