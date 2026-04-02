@@ -198,7 +198,7 @@ class Detakon():
                 # creates a field if it does not exist. By default an empty string, otherwise index 0 arguments.
                 elif operation.lower() in ["create", "new", "create field", "new field"]:
                     if field not in row:
-                        if len(arguments) > 1:
+                        if len(arguments) > 0:
                             row[field] = arguments[0]
                         else:
                             row[field] = ""
