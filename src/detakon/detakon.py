@@ -188,10 +188,10 @@ class Detakon():
                         row[field] = hashmap[row[field]]
                     # print(f"after: {row[field]}")
                 elif operation == "exclude":
-                    if self.compare(row[field], *arguments):
+                    if self.filter(row[field], *arguments):
                         return None
                 elif operation == "include":
-                    if not self.compare(row[field], *arguments):
+                    if not self.filter(row[field], *arguments):
                         return None
                 elif operation.lower() in ["cast", "converttype", "convert type", "type cast", "typecast"]:
                     row[field] = self.cast_type(row[field], arguments[0])
@@ -245,7 +245,7 @@ class Detakon():
             except Exception as e:
                 raise Exception(f"Failed to load JSON file: {e}")
 
-    def compare(self, row_value, comparison: str, comparison_value) -> bool:
+    def filter(self, row_value, comparison: str, comparison_value) -> bool:
         """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
         Designed for use in exclude and include filter operations."""
         if comparison.lower() in ["equal", "=", "==", "isequal", "is equal"]:
