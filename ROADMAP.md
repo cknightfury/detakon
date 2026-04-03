@@ -20,6 +20,7 @@ Some items may be large future features, intent to make a minor change in a futu
     - format date / time / timestamp
     - merge / split fields operation with delimiter options
     - ~~filter operation exclude / include~~
+        - add regex
     - math operations
         - binary between two fields
         - binary between a field and a detamap provided value (such as multiply decimal "Percent" field by 100)
@@ -27,6 +28,7 @@ Some items may be large future features, intent to make a minor change in a futu
         - ~~example: cast values to int or float before using an include or exclude filter for values < or > a given value.~~
     - ~~create new field operation~~
         - ~~Defaults section typically preferred, but create operation can be used to create fields needed for a users sequence of operations.~~
+    - add internationalization to detamaps
 - Add detaplexing
 - Add detapipes
 - Add TOML support for detamaps
