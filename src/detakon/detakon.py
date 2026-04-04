@@ -248,7 +248,6 @@ class Detakon():
     def filter(self, row_value, comparison: str, comparison_value) -> bool:
         """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
         Designed for use in exclude and include filter operations."""
-        print(f"row_value: {row_value} type: {type(row_value)}\ncomparison_value: {comparison_value} type: {type(comparison_value)}\n--------------------------")
         if comparison.lower() in ["equal", "=", "==", "isequal", "is equal"]:
             return row_value == comparison_value
         elif comparison.lower() in ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]:
