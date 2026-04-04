@@ -5,6 +5,7 @@ from types import GeneratorType
 from csv import DictReader, DictWriter
 from operator import methodcaller
 from decimal import Decimal
+from collections.abc import Generator
 
 class Detakon():
     """detakon uses a detakon map to convert data."""
@@ -13,7 +14,7 @@ class Detakon():
         Initialize all values for Detakon object.
         
         :param self: Object reference.
-        :param detamap: detamap location that describes field mappings, default values, and operations to perform on data.
+        :param detamap: detamap location or dictionary that describes field mappings, default values, and operations to perform on data.
         :param source: Source to input.  See load_source method for accepted types.
         :param destination: Destination to output.
         :param args: Additional parameters.
@@ -29,9 +30,13 @@ class Detakon():
         self.source = source
         self.destination = destination
 
-    def reload_detamap(self, detamap=None):
+    def reload_detamap(self, detamap=None) -> None:
         """
-        For interactive sessions to change the detamap. Pass new detamap as argument.  If no argument is provided, the original detamap will be reloaded; if the original detamap was a file, this will update the with any changes from the file."""
+        For interactive sessions to change the detamap. Pass new detamap as argument.
+        
+        If no argument is provided, the original detamap will be reloaded; if the original detamap was a file, this will update the with any changes from the file.
+        
+        :param detamap: New detamap.  Default to reloading self.original_detamap (which is stored during __init__)."""
         self.detamap: dict = self.load_detamap(self.original_detamap) if detamap is None else self.load_detamap(detamap)
         self.mappings: dict = self.detamap["Mappings"]
         self.defaults: dict = self.detamap.get("Defaults", dict())
@@ -39,7 +44,7 @@ class Detakon():
         self.source_info: dict = self.detamap["Source"]
         self.output_info: dict = self.detamap["Output"]
 
-    def convert(self):
+    def convert(self) -> None:
         """
         Convert current source data using current detamap and destination.
         """
@@ -90,16 +95,17 @@ class Detakon():
         elif self.output_info["argument"] == "return":
             pass
 
-    def source_reader(self):
+    def source_reader(self) -> Generator | dict | list:
         """
         Validate source type, and return a generator object if possible, otherwise return full object in accepted format.
+
+        Source type should be defined in detamap under Source map.  Argument key defines what the source argument passed to Detakon() is (such as a filepath), and type key defines what sub-type to apply to that (such as filepath provided is a str or path object).
 
         Intent to add remote file, or result of API calls - giving consideration to add ability, or require calling application to submit data directly.
         
         :param self: Object reference.
-        :param source: Source data.  File as string, Path object, or an opened file object.  Also can accept string object of CSV (comma or tab delimited), or JSON.
-        :return: File path as string.
-        :rtype: str
+        :return: Generator object of dictionaries, or list/dictionary of dictionaries if generator not possible.
+        :rtype: Generator | dict
         """
         # branch based on source.argument value provided in detamap
 
