@@ -195,11 +195,11 @@ class Detakon():
                         return None
                 elif operation.lower() in ["cast", "converttype", "convert type", "type cast", "typecast"]:
                     row[field] = self.cast_type(row[field], arguments)
-                # creates a field if it does not exist. By default an empty string, otherwise index 0 arguments.
+                # creates a field if it does not exist. By default an empty string, otherwise equal to arguments.
                 elif operation.lower() in ["create", "new", "create field", "new field"]:
                     if field not in row:
                         if len(arguments) > 0:
-                            row[field] = arguments[0]
+                            row[field] = arguments
                         else:
                             row[field] = ""
                 # below operations are place holders, and may change operation names during implementation
