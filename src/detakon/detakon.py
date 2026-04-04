@@ -44,6 +44,27 @@ class Detakon():
         self.source_info: dict = self.detamap["Source"]
         self.output_info: dict = self.detamap["Output"]
 
+    def set_source(self, source) -> None:
+        """Change the data source."""
+        self.source = source
+
+    def get_source(self):
+        """Return the current source.
+        
+        :return: self.source
+        :rtype: str | path | dict | list"""
+        return self.source
+    
+    def set_destination(self, destination) -> None:
+        """Change destination or output."""
+        self.destination = destination
+
+    def get_destination(self):
+        """Return the current destination.
+        
+        :return: self.destination"""
+        return self.destination    
+
     def convert(self) -> None:
         """
         Convert current source data using current detamap and destination.
