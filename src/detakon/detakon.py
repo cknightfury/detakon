@@ -194,7 +194,7 @@ class Detakon():
                     if not self.filter(row[field], *arguments):
                         return None
                 elif operation.lower() in ["cast", "converttype", "convert type", "type cast", "typecast"]:
-                    row[field] = self.cast_type(row[field], arguments[0])
+                    row[field] = self.cast_type(row[field], arguments)
                 # creates a field if it does not exist. By default an empty string, otherwise index 0 arguments.
                 elif operation.lower() in ["create", "new", "create field", "new field"]:
                     if field not in row:
@@ -248,6 +248,7 @@ class Detakon():
     def filter(self, row_value, comparison: str, comparison_value) -> bool:
         """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
         Designed for use in exclude and include filter operations."""
+        print(f"row_value: {row_value} type: {type(row_value)}\ncomparison_value: {comparison_value} type: {type(comparison_value)}\n--------------------------")
         if comparison.lower() in ["equal", "=", "==", "isequal", "is equal"]:
             return row_value == comparison_value
         elif comparison.lower() in ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]:
@@ -271,17 +272,17 @@ class Detakon():
         else:
             raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
-    def cast_type(self, value, type: str):
+    def cast_type(self, value, data_type: str):
         """Cast value into the given type.  If type does not match an expected value raise a ValueError."""
-        if type.lower() in ["int", "integer", "long"]:
+        if data_type.lower() in ["int", "integer", "long"]:
             return int(value)
-        elif type.lower() in ["float", "double"]:
+        elif data_type.lower() in ["float", "double"]:
             return float(value)
-        elif type.lower() == "decimal":
+        elif data_type.lower() in ["decimal"]:
             return Decimal(value)
-        elif type.lower() in ["bool", "boolean"]:
+        elif data_type.lower() in ["bool", "boolean"]:
             return bool(value)
-        elif type.lower() in ["str", "string"]:
+        elif data_type.lower() in ["str", "string"]:
             return str(value)
         else:
-            raise ValueError(f"Unrecognized type value for cast: {type}")
+            raise ValueError(f"Unrecognized type value for cast: {data_type}")
