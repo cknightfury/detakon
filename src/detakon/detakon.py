@@ -21,16 +21,11 @@ class Detakon():
         :param kargs: Addtional flags.
         """
         self.original_detamap = detamap
-        self.detamap: dict = self.load_detamap(detamap)
-        self.mappings: dict = self.detamap["Mappings"]
-        self.defaults: dict = self.detamap.get("Defaults", dict())
-        self.operations: dict = self.detamap.get("Operations", dict())
-        self.source_info: dict = self.detamap["Source"]
-        self.output_info: dict = self.detamap["Output"]
+        self.set_detamap() # set detamap member variables, and member variables for each sub-map: mappings, defaults, operations, source_info, _output_info, etc
         self.source = source
         self.destination = destination
 
-    def reload_detamap(self, detamap=None) -> None:
+    def set_detamap(self, detamap=None) -> None:
         """
         For interactive sessions to change the detamap. Pass new detamap as argument.
         
