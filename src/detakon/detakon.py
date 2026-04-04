@@ -29,10 +29,10 @@ class Detakon():
         self.source = source
         self.destination = destination
 
-    def reload_detamap(self, detamap):
+    def reload_detamap(self, detamap=None):
         """
-        For interactive sessions to change the detamap. If original detamap was an external source (such as a file), self.original_detamap may be passed to reload with changes."""
-        self.detamap: dict = self.load_detamap(detamap)
+        For interactive sessions to change the detamap. Pass new detamap as argument.  If no argument is provided, the original detamap will be reloaded; if the original detamap was a file, this will update the with any changes from the file."""
+        self.detamap: dict = self.load_detamap(self.original_detamap) if detamap is None else self.load_detamap(detamap)
         self.mappings: dict = self.detamap["Mappings"]
         self.defaults: dict = self.detamap.get("Defaults", dict())
         self.operations: dict = self.detamap.get("Operations", dict())
