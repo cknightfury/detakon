@@ -39,3 +39,5 @@ source_suffix = {
     '.txt': 'restructuredtext',
     '.md': 'markdown',
 }
+
+myst_heading_anchors = 3 # enables anchors for headings in markdown
