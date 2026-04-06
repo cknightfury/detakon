@@ -33,7 +33,7 @@ class Detakon():
         
         :param detamap: New detamap.  Default to reloading self.original_detamap (which is stored during __init__)."""
         self.detamap: dict = self.load_detamap(self.original_detamap) if detamap is None else self.load_detamap(detamap)
-        self.lang: dict = Detakon.load_language(self.detamap.get("lang", "en"))
+        self.lang: dict = self.load_language(self.detamap.get("lang", "en-us"))
         self.mappings: dict = self.detamap[self.lang["Mappings"]]
         self.defaults: dict = self.detamap.get(self.lang["Defaults"], dict())
         self.operations: dict = self.detamap.get(self.lang["Operations"], dict())
@@ -204,7 +204,7 @@ class Detakon():
                 elif operation.lower() in self.lang.get("slice", ["slice"]):
                     slice_object = slice(*(x if isinstance(x, int) else None for x in arguments))
                     row[field] = row[field][slice_object]
-                elif operation.lower() in self.lang.get(["hashmap"], ["hashmap", "dictionary", "dict"]):
+                elif operation.lower() in self.lang.get("hashmap", ["hashmap", "dictionary", "dict"]):
                     # print(f"before {operation}: {row[field]}")
                     hashmap = arguments[0]
                     if row[field] in hashmap.keys():
@@ -309,8 +309,7 @@ class Detakon():
         else:
             raise ValueError(f"Unrecognized type value for cast: {data_type}")
 
-    @classmethod
-    def load_language(lang: str = "en-us") -> dict:
+    def load_language(self, lang: str = "en-us") -> dict:
         """Returns translation dictionary for specified language.
 
         Language should be specified as ISO 639 language codes and ISO 3166 country codes seperated by a dash (-).  Default is en-us.
@@ -321,5 +320,5 @@ class Detakon():
         :param lang: language code for specified language.  Defaults to en-us.
         :return: translation dictionary."""
         if lang.lower() in ["english", "en", "eng", "en-us", "en-usa", "en-840", "eng-us", "eng-usa", "eng-840"]:
-            from languages import en_us
+            from .languages import en_us
             return en_us.translation
