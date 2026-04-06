@@ -272,6 +272,19 @@ class Detakon():
         """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
         Designed for use in exclude and include filter operations.
         
+        Filter comparison values and accepted aliases:
+
+        equal: "equal", "=", "==", "isequal", "is equal"
+        not equal: "not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="
+        in: "in", "contains", "substring"
+        not in: "not in", "notin"
+        greater than: "gt", "greaterthan", "greater than", ">"
+        less than: "lt", "lessthan", "less than", "<"
+        greater than or equal: "ge", "greater or equal", "greater than or equal", ">=", "≥"
+        less than or equal:"le", "less or equal", "less than or equal", "<=", "≤"
+        boolean: "bool", "boolean", "truthiness", "truthy", "falsy"
+        none: "isnone", "none"
+
         :param row_value: The value from the data source row to compare against comparison_value.
         :param comparison: The filter comparison operator to be used for the comparison.
         :param comparison_value: The value to compare the source value agqainst.
