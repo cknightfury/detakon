@@ -15,3 +15,4 @@ Version: |release|
    :maxdepth: 2
    :caption: Contents:
 
+   detakon
