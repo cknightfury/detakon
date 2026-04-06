@@ -27,7 +27,8 @@ share/python-wheels/
 MANIFEST
 test_data/
 output/
-docs/
+docs/make.bat
+docs/Makefile
 
 # PyInstaller
 #   Usually these files are written by a python script from a template
