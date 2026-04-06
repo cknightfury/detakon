@@ -281,7 +281,7 @@ class Detakon():
         * greater than: "gt", "greaterthan", "greater than", ">"
         * less than: "lt", "lessthan", "less than", "<"
         * greater than or equal: "ge", "greater or equal", "greater than or equal", ">=", "≥"
-        * less than or equal:"le", "less or equal", "less than or equal", "<=", "≤"
+        * less than or equal: "le", "less or equal", "less than or equal", "<=", "≤"
         * boolean: "bool", "boolean", "truthiness", "truthy", "falsy"
         * none: "isnone", "none"
 
