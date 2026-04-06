@@ -33,11 +33,12 @@ class Detakon():
         
         :param detamap: New detamap.  Default to reloading self.original_detamap (which is stored during __init__)."""
         self.detamap: dict = self.load_detamap(self.original_detamap) if detamap is None else self.load_detamap(detamap)
-        self.mappings: dict = self.detamap["Mappings"]
-        self.defaults: dict = self.detamap.get("Defaults", dict())
-        self.operations: dict = self.detamap.get("Operations", dict())
-        self.source_info: dict = self.detamap["Source"]
-        self.output_info: dict = self.detamap["Output"]
+        self.lang: dict = Detakon.load_language(self.detamap.get("lang", "en"))
+        self.mappings: dict = self.detamap[self.lang["Mappings"]]
+        self.defaults: dict = self.detamap.get(self.lang["Defaults"], dict())
+        self.operations: dict = self.detamap.get(self.lang["Operations"], dict())
+        self.source_info: dict = self.detamap[self.lang["Source"]]
+        self.output_info: dict = self.detamap[self.lang["Output"]]
 
     def set_source(self, source) -> None:
         """Change the data source."""
@@ -58,7 +59,7 @@ class Detakon():
         """Return the current destination.
         
         :return: self.destination"""
-        return self.destination    
+        return self.destination
 
     def convert(self) -> None:
         """
@@ -68,12 +69,12 @@ class Detakon():
 
         # branch to determine output method called based on detamap.Output.argument for destination parameter
         # filepath as either string or Path object 
-        if self.output_info["argument"] == "filepath":
-            if self.output_info["type"] == "str":
+        if self.output_info["argument"] in self.lang.get("filepath", ["filepath"]):
+            if self.output_info["type"] in self.lang.get("cast_string", ["str", "string"]):
                 self.destination = Path(self.destination)
 
             # if not appending to existing file, delete if file exists and create new empty file
-            if not self.output_info.get("append", False) and self.destination.exists() and self.destination.is_file():
+            if not self.output_info.get(self.lang.get("append", "append"), False) and self.destination.exists() and self.destination.is_file():
                 self.destination.unlink()
 
             if self.destination.exists() and self.destination.is_file():
@@ -101,14 +102,14 @@ class Detakon():
                             quoting=self.output_info.get("quoting", 0),
                             strict=self.output_info.get("strict", False))
                 
-                if new_file and not self.output_info.get("omit_heading", False):
+                if new_file and not self.output_info.get(self.lang.get("omit_heading", "omit_heading"), False):
                     csv_writer.writeheader()
                 for entry in data_generator:
                     row_data = {}
                     for source_field, destination_field in self.mappings.items():
                         row_data[destination_field] = entry[source_field]
                     csv_writer.writerow(row_data)
-        elif self.output_info["argument"] == "return":
+        elif self.output_info[self.lang.get("argument", "argument")] == "return":
             pass
 
     def source_reader(self) -> Generator | dict | list:
@@ -127,8 +128,8 @@ class Detakon():
 
         # handler for source.argument being a filepath
         # filepath must be either a string to a file, or a Path object for a file.
-        if self.source_info["argument"] == "filepath":
-            if self.source_info["type"] == "str":
+        if self.source_info[self.lang.get("argument", "argument")] in self.lang.get("filepath", ["filepath"]):
+            if self.source_info[self.lang.get("type", "type")] in self.lang.get("cast_string", ["str", "string"]):
                 self.source = Path(self.source)
             if self.source.exists() and self.source.is_file():
                 with self.source.open(mode='r',
@@ -188,37 +189,37 @@ class Detakon():
         for entry in self.operations:
             for operator, info in entry.items():
                 operation = operator
-                fields = info.get("fields")
+                fields = info.get(self.lang.get("fields", "fields"))
                 if fields == "*":
                     fields = row.keys()
                 elif isinstance(fields, str):
                     fields = [fields]
-                arguments = info.get("args", [])
-                keyword_arguments = info.get("kwargs", dict())
+                arguments = info.get(self.lang.get("arguments"), [])
+                keyword_arguments = info.get(self.lang.get("keyword_arguments"), dict())
 
             for field in fields:
                 # process string operations
                 if operation in dir(str):
                     row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
-                elif operation.lower() in ["slice"]:
+                elif operation.lower() in self.lang.get("slice", ["slice"]):
                     slice_object = slice(*(x if isinstance(x, int) else None for x in arguments))
                     row[field] = row[field][slice_object]
-                elif operation.lower() in ["hashmap", "dictionary", "dict"]:
+                elif operation.lower() in self.lang.get(["hashmap"], ["hashmap", "dictionary", "dict"]):
                     # print(f"before {operation}: {row[field]}")
                     hashmap = arguments[0]
                     if row[field] in hashmap.keys():
                         row[field] = hashmap[row[field]]
                     # print(f"after: {row[field]}")
-                elif operation == "exclude":
+                elif operation.lower() in self.lang.get("exclude", ["exclude"]):
                     if self.filter(row[field], *arguments):
                         return None
-                elif operation == "include":
+                elif operation.lower() in self.lang.get("include", ["include"]):
                     if not self.filter(row[field], *arguments):
                         return None
-                elif operation.lower() in ["cast", "converttype", "convert type", "type cast", "typecast"]:
+                elif operation.lower() in self.lang.get("cast", ["cast", "converttype", "convert type", "type cast", "typecast"]):
                     row[field] = self.cast_type(row[field], arguments)
                 # creates a field if it does not exist. By default an empty string, otherwise equal to arguments.
-                elif operation.lower() in ["create", "new", "create field", "new field"]:
+                elif operation.lower() in self.lang.get("create field", ["create", "new", "create field", "new field"]):
                     if field not in row:
                         if len(arguments) > 0:
                             row[field] = arguments
@@ -270,40 +271,55 @@ class Detakon():
     def filter(self, row_value, comparison: str, comparison_value) -> bool:
         """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
         Designed for use in exclude and include filter operations."""
-        if comparison.lower() in ["equal", "=", "==", "isequal", "is equal"]:
+        if comparison.lower() in self.lang.get("filter_equal", ["equal", "=", "==", "isequal", "is equal"]):
             return row_value == comparison_value
-        elif comparison.lower() in ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]:
+        elif comparison.lower() in self.lang.get("filter_not_equal", ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]):
             return row_value != comparison_value
-        elif comparison.lower() in ["in", "contains", "substring"]:
+        elif comparison.lower() in self.lang.get("filter_in", ["in", "contains", "substring"]):
             return comparison_value in row_value
-        elif comparison.lower() in ["not in", "notin"]:
+        elif comparison.lower() in self.lang.get("filter_not_in", ["not in", "notin"]):
             return comparison_value not in row_value
-        elif comparison.lower() in ["gt", "greaterthan", "greater than", ">"]:
+        elif comparison.lower() in self.lang.get("filter_greater_than", ["gt", "greaterthan", "greater than", ">"]):
             return row_value > comparison_value
-        elif comparison.lower() in ["lt", "lessthan", "less than", "<"]:
+        elif comparison.lower() in self.lang.get("filter_less_than", ["lt", "lessthan", "less than", "<"]):
             return row_value < comparison_value
-        elif comparison.lower() in ["ge", "greater or equal", "greater than or equal", ">=", "≥"]:
+        elif comparison.lower() in self.lang.get("filter_greater_or_equal", ["ge", "greater or equal", "greater than or equal", ">=", "≥"]):
             return row_value >= comparison_value
-        elif comparison.lower() in ["le", "less or equal", "less than or equal", "<=", "≤"]:
+        elif comparison.lower() in self.lang.get("filter_less_or_equal", ["le", "less or equal", "less than or equal", "<=", "≤"]):
             return row_value <= comparison_value
-        elif comparison.lower() in ["bool", "boolean", "truthiness", "truthy", "falsy"]:
+        elif comparison.lower() in self.lang.get("filter_boolean", ["bool", "boolean", "truthiness", "truthy", "falsy"]):
             return bool(row_value)
-        elif comparison.lower() in ["isnone", "none"]:
+        elif comparison.lower() in self.lang.get("filter_none", ["isnone", "none"]):
             return row_value is None
         else:
             raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
     def cast_type(self, value, data_type: str):
         """Cast value into the given type.  If type does not match an expected value raise a ValueError."""
-        if data_type.lower() in ["int", "integer", "long"]:
+        if data_type.lower() in self.lang.get("cast_int", ["int", "integer", "long"]):
             return int(value)
-        elif data_type.lower() in ["float", "double"]:
+        elif data_type.lower() in self.lang.get("cast_float", ["float", "double"]):
             return float(value)
-        elif data_type.lower() in ["decimal"]:
+        elif data_type.lower() in self.lang.get("cast_decimal", ["decimal"]):
             return Decimal(value)
-        elif data_type.lower() in ["bool", "boolean"]:
+        elif data_type.lower() in self.lang.get("cast_boolean", ["bool", "boolean"]):
             return bool(value)
-        elif data_type.lower() in ["str", "string"]:
+        elif data_type.lower() in self.lang.get("cast_string", ["str", "string"]):
             return str(value)
         else:
             raise ValueError(f"Unrecognized type value for cast: {data_type}")
+
+    @classmethod
+    def load_language(lang: str = "en-us") -> dict:
+        """Returns translation dictionary for specified language.
+
+        Language should be specified as ISO 639 language codes and ISO 3166 country codes seperated by a dash (-).  Default is en-us.
+        ISO 639 set 1, 2, and 3 codes can be used.  `List of ISO 639 language codes <https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes>`_
+        ISO 3166 A-2, A-3, and Num. codes can be used. `List of ISO 3166 country codes <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes>`_
+
+        
+        :param lang: language code for specified language.  Defaults to en-us.
+        :return: translation dictionary."""
+        if lang.lower() in ["english", "en", "eng", "en-us", "en-usa", "en-840", "eng-us", "eng-usa", "eng-840"]:
+            from languages import en_us
+            return en_us.translation
