@@ -318,7 +318,7 @@ class Detakon():
 
         
         :param lang: language code for specified language.  Defaults to en-us.
-        :return: translation dictionary."""
+        :returns: translation dictionary."""
         if lang.lower() in ["english", "en", "eng", "en-us", "en-usa", "en-840", "eng-us", "eng-usa", "eng-840"]:
             from .languages import en_us
             return en_us.translation

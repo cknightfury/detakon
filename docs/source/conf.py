@@ -6,15 +6,22 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+from datetime import datetime
+import sys
+sys.path.append("../../src")
+from detakon import __about__
+
+year = datetime.now().year
+
 project = 'Detakon'
-copyright = '2026, Clef Knightfury'
 author = 'Clef Knightfury'
-release = '0.3.0'
+copyright = f'2026-{year}, {author}'
+release = __about__.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ['sphinx.ext.autodoc', 'myst_parser']
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -26,3 +33,9 @@ exclude_patterns = []
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
+
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'restructuredtext',
+    '.md': 'markdown',
+}
