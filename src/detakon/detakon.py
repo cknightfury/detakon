@@ -313,7 +313,19 @@ class Detakon():
             raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
     def cast_type(self, value, data_type: str):
-        """Cast value into the given type.  If type does not match an expected value raise a ValueError."""
+        """Cast value into the given type.  If type does not match an expected value raise a ValueError.
+        
+        Types values for casting, and accepted aliases:
+
+        * int: "int", "integer", "long"
+        * float: "float", "double"
+        * Decimal: "decimal" (specifically the python type decimal.Decimal)
+        * bool: "bool", "boolean"
+        * str: "str", "string"
+        
+        :param value: value from source to cast into new type
+        :param data_type: type to cast value to
+        :returns: value as new type"""
         if data_type.lower() in self.lang.get("cast_int", ["int", "integer", "long"]):
             return int(value)
         elif data_type.lower() in self.lang.get("cast_float", ["float", "double"]):
