@@ -270,7 +270,12 @@ class Detakon():
 
     def filter(self, row_value, comparison: str, comparison_value) -> bool:
         """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
-        Designed for use in exclude and include filter operations."""
+        Designed for use in exclude and include filter operations.
+        
+        :param row_value: The value from the data source row to compare against comparison_value.
+        :param comparison: The filter comparison operator to be used for the comparison.
+        :param comparison_value: The value to compare the source value agqainst.
+        :returns: bool"""
         if comparison.lower() in self.lang.get("filter_equal", ["equal", "=", "==", "isequal", "is equal"]):
             return row_value == comparison_value
         elif comparison.lower() in self.lang.get("filter_not_equal", ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]):
