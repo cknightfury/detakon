@@ -33,7 +33,7 @@ class Converter():
         
         :param detamap: New detamap.  Default to reloading self.original_detamap (which is stored during __init__)."""
         self.detamap: dict = self._load_detamap(self.original_detamap) if detamap is None else self._load_detamap(detamap)
-        self.lang: dict = self.load_language(self.detamap.get("lang", "en-us"))
+        self.lang: dict = self._load_language(self.detamap.get("lang", "en-us"))
         self.mappings: dict = self.detamap[self.lang["Mappings"]]
         self.defaults: dict = self.detamap.get(self.lang["Defaults"], dict())
         self.operations: dict = self.detamap.get(self.lang["Operations"], dict())
@@ -65,7 +65,7 @@ class Converter():
         """
         Processes conversion for the currently loaded Detamap, data source, and destination.
         """
-        data_generator = self.source_reader()
+        data_generator = self._source_reader()
 
         # branch to determine output method called based on detamap.Output.argument for destination parameter
         # filepath as either string or Path object 
@@ -112,7 +112,7 @@ class Converter():
         elif self.output_info[self.lang.get("argument", "argument")] == "return":
             pass
 
-    def source_reader(self) -> Generator | dict | list:
+    def _source_reader(self) -> Generator | dict | list:
         """
         Validate source type, and return a generator object if possible, otherwise return full object in accepted format.
 
@@ -211,13 +211,13 @@ class Converter():
                         row[field] = hashmap[row[field]]
                     # print(f"after: {row[field]}")
                 elif operation.lower() in self.lang.get("exclude", ["exclude"]):
-                    if self.filter(row[field], *arguments):
+                    if self._filter(row[field], *arguments):
                         return None
                 elif operation.lower() in self.lang.get("include", ["include"]):
-                    if not self.filter(row[field], *arguments):
+                    if not self._filter(row[field], *arguments):
                         return None
                 elif operation.lower() in self.lang.get("cast", ["cast", "converttype", "convert type", "type cast", "typecast"]):
-                    row[field] = self.cast_type(row[field], arguments)
+                    row[field] = self._cast_type(row[field], arguments)
                 # creates a field if it does not exist. By default an empty string, otherwise equal to arguments.
                 elif operation.lower() in self.lang.get("create field", ["create", "new", "create field", "new field"]):
                     if field not in row:
@@ -268,7 +268,7 @@ class Converter():
             except Exception as e:
                 raise Exception(f"Failed to load JSON file: {e}")
 
-    def filter(self, row_value, comparison: str, comparison_value) -> bool:
+    def _filter(self, row_value, comparison: str, comparison_value) -> bool:
         """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
         Designed for use in exclude and include filter operations.
         
@@ -312,7 +312,7 @@ class Converter():
         else:
             raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
-    def cast_type(self, value, data_type: str):
+    def _cast_type(self, value, data_type: str):
         """Cast value into the given type.  If type does not match an expected value raise a ValueError.
         
         Types values for casting, and accepted aliases:
@@ -339,7 +339,7 @@ class Converter():
         else:
             raise ValueError(f"Unrecognized type value for cast: {data_type}")
 
-    def load_language(self, lang: str = "en-us") -> dict:
+    def _load_language(self, lang: str = "en-us") -> dict:
         """Returns translation dictionary for specified language.
 
         Language should be specified as ISO 639 language codes and ISO 3166 country codes seperated by a dash (-).  Default is en-us.
