@@ -32,7 +32,7 @@ class Converter():
         If no argument is provided, the original detamap will be reloaded; if the original detamap was a file, this will update the with any changes from the file.
         
         :param detamap: New detamap.  Default to reloading self.original_detamap (which is stored during __init__)."""
-        self.detamap: dict = self.load_detamap(self.original_detamap) if detamap is None else self.load_detamap(detamap)
+        self.detamap: dict = self._load_detamap(self.original_detamap) if detamap is None else self._load_detamap(detamap)
         self.lang: dict = self.load_language(self.detamap.get("lang", "en-us"))
         self.mappings: dict = self.detamap[self.lang["Mappings"]]
         self.defaults: dict = self.detamap.get(self.lang["Defaults"], dict())
@@ -63,7 +63,7 @@ class Converter():
 
     def process(self) -> None:
         """
-        Convert current source data using current detamap and destination.
+        Processes conversion for the currently loaded Detamap, data source, and destination.
         """
         data_generator = self.source_reader()
 
@@ -121,7 +121,7 @@ class Converter():
         Intent to add remote file, or result of API calls - giving consideration to add ability, or require calling application to submit data directly.
         
         :param self: Object reference.
-        :return: Generator object of dictionaries, or list/dictionary of dictionaries if generator not possible.
+        :returns: Generator object of dictionaries, or list/dictionary of dictionaries if generator not possible.
         :rtype: Generator | dict
         """
         # branch based on source.argument value provided in detamap
@@ -157,9 +157,9 @@ class Converter():
                                                 strict=self.source_info.get("strict", False))
                         for row in csv_reader:
                             # insert default values if key missing or value is empty string
-                            row = self.process_defaults(row)
+                            row = self._process_defaults(row)
                             # process operations
-                            row = self.process_operations(row)
+                            row = self._process_operations(row)
                             if row is not None:
                                 yield row
 
@@ -175,7 +175,7 @@ class Converter():
         # else:
         #     raise ValueError("Source could not be determined.")
 
-    def process_defaults(self, row):
+    def _process_defaults(self, row):
         """Add default values to any missing column or empty string."""
         for key, value in self.defaults.items():
             if key not in row:
@@ -184,7 +184,7 @@ class Converter():
                 row[key] = value
         return row
     
-    def process_operations(self, row):
+    def _process_operations(self, row):
         """Process all operations from self.operations in order that operations appear in list."""
         for entry in self.operations:
             for operator, info in entry.items():
@@ -240,7 +240,7 @@ class Converter():
         # print("---------End Data Output ------------")
         return row
 
-    def load_detamap(self, detamap) -> dict:
+    def _load_detamap(self, detamap) -> dict:
         """
         Process object passed as detamap and return dictionary detamap.
         
