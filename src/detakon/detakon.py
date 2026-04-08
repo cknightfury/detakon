@@ -7,7 +7,7 @@ from operator import methodcaller
 from decimal import Decimal
 from collections.abc import Generator
 
-class Detakon():
+class Converter():
     """detakon uses a detakon map to convert data."""
     def __init__(self, detamap, source, destination, *args, **kargs):
         """
@@ -47,7 +47,7 @@ class Detakon():
     def get_source(self):
         """Return the current source.
         
-        :return: self.source
+        :returns: self.source
         :rtype: str | path | dict | list"""
         return self.source
     
@@ -58,10 +58,10 @@ class Detakon():
     def get_destination(self):
         """Return the current destination.
         
-        :return: self.destination"""
+        :returns: self.destination"""
         return self.destination
 
-    def convert(self) -> None:
+    def process(self) -> None:
         """
         Convert current source data using current detamap and destination.
         """
