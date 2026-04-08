@@ -10,6 +10,8 @@ If a field is blank/empty, the value for the corresponding key will be inserted.
 
 If a field does not exist in the source data, the field is created using the corresponding ``Defaults`` value.
 
+The ``Defaults`` section is optional.
+
 ########
 Examples
 ########
