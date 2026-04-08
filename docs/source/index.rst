@@ -16,10 +16,4 @@ Version: |release|
    :caption: Contents:
 
    detamap
-   mappings
-   defaults
-   operations
-   source
-   output
-   lang
    detakon

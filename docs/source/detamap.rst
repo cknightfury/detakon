@@ -29,3 +29,16 @@ Detamaps have the following keys for settings and configuration:
 
 * *lang* - A string indicating the language the Detamap is written in (default: "en-us").
 
+#######################
+Detailed Specifications
+#######################
+
+.. toctree::
+   :maxdepth: 1
+
+   mappings
+   defaults
+   operations
+   source
+   output
+   lang
