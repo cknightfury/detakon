@@ -1,8 +1,8 @@
 .. docs/detakon.rst
 
-**************
-Detakon Module
-**************
+******************
+Detakon Module API
+******************
 
 This is the pydoc code for ``detakon`` module.
 
