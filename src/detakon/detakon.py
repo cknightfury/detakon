@@ -225,6 +225,12 @@ class Converter():
                             row[field] = arguments
                         else:
                             row[field] = ""
+                elif operation.lower() in self.lang.get("duplicate", ["duplicate"]):
+                    for argument in arguments:
+                        if argument not in row:
+                            row[argument] = row[field]
+                        else:
+                            raise ValueError(f"Operation '{operation}' failed: new field <{argument}> already exists.")
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:
                     pass
