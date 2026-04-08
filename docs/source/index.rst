@@ -16,3 +16,4 @@ Version: |release|
    :caption: Contents:
 
    detakon
+   detamap
