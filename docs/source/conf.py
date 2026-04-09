@@ -21,7 +21,7 @@ release = __about__.__version__
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.autodoc', 'myst_parser']
+extensions = ['sphinx.ext.autodoc', 'myst_parser', 'sphinx.ext.intersphinx']
 
 templates_path = ['_templates']
 exclude_patterns = ['build']
@@ -41,3 +41,5 @@ source_suffix = {
 }
 
 myst_heading_anchors = 3 # enables anchors for headings in markdown
+
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
