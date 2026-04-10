@@ -10,7 +10,7 @@ Keys should be the source fields.  Keys do not need to exist in the source file 
 
 ``Mappings`` should only contain fields that will be in the final output.
 
-The order of fields in ``Mappings`` does not determine the order of fields in the output.  The order of fields in the output is determined by supplying a list of fields to the "fields" key in the ``Output`` section.
+The order of fields in ``Mappings`` does not determine the order of fields in the output.  The order of fields in the output is determined by supplying a list of fields to the ``field`` key in the :doc:`Output Section <output>`.
 
 ########
 Examples
