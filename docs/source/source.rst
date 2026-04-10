@@ -54,7 +54,7 @@ This setting is required.
 
 ``csv``
 ^^^^^^^
-    To be used for data structed as a Comma Separated Value (CSV), or similar data that can be read by Python's :py:class:`csv.DictReader` class in the :py:mod:`csv` module.
+    To be used for data structured as Comma Separated Values (CSV), or similar data that can be read by Python's :py:class:`csv.DictReader` class in the :py:mod:`csv` module.
 
     Detakon uses :py:class:`csv.DictReader` to read CSV source data.  Any additional settings can be provided that matches the parameters that :py:class:`csv.DictReader` accepts.
 
