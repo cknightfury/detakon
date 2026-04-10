@@ -65,7 +65,7 @@ Setting
 Major Sections
 ##############
 
-Detamaps have five primary sections with the following keys:
+Detamaps have five primary sections:
 
 * Mappings - A dictionary of source fields mapped to the output field names.
 * *Defaults* - A dictionary containing default values to be used for given source fields.
