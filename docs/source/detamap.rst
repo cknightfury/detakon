@@ -43,8 +43,6 @@ This documentation is making a concious decision to use Python terminology when 
       - Array
       - Array
 
-Additional Vocabulary:
-
 Nested Dictionary
     A dictionary inside of another dictionary.
 
@@ -61,7 +59,7 @@ Setting
     Any item connected to the root that is not a section.  Settings will be reffered to as the name of the key for the setting.  Such as the :doc:lang.rst``
 
 .. tip::
-    Sections or keys below in *italics* are optional.
+    Sections or settings below in *italics* are optional.
 
 ##############
 Major Sections
