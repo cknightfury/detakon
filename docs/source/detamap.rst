@@ -58,9 +58,6 @@ Field
 Setting
     Any item connected to the root that is not a section.  Settings will be referred to as the name of the key for the setting.  Such as the :doc:`lang <lang>` setting.
 
-.. tip::
-    Sections or settings below in *italics* are optional.
-
 ##############
 Major Sections
 ##############
@@ -68,8 +65,8 @@ Major Sections
 Detamaps have five primary sections:
 
 * :doc:`Mappings <mappings>` - A dictionary of source fields mapped to the output field names.
-* :doc:`*Defaults* <defaults>` - A dictionary containing default values to be used for given source fields.
-* * :doc:`Operations <operations>` * - A list of operations/transformations to be performed in order.
+* :doc:`Defaults <defaults>` (optional) - A dictionary containing default values to be used for given source fields.
+* :doc:`Operations <operations>` (optional) - A list of operations/transformations to be performed in order.
 * :doc:`Source <source>` - A dictionary of configuration arguments to read the data source.
 * :doc:`Output <output>` - A dictionary of configuration arguments used for outputting data.
 
@@ -79,7 +76,7 @@ Settings & Configuration
 
 Detamaps have the following items for settings and configuration:
 
-* * :doc:`lang <lang>` * - A string indicating the language the Detamap is written in (default: "en-us").
+* :doc:`lang <lang>` (optional) - A string indicating the language the Detamap is written in (default: "en-us").
 
 #######################
 Detailed Specifications
