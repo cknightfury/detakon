@@ -56,7 +56,7 @@ Field
     Individual name of a value from the data source or destination.  Also can be thought of as a column name in tablular data.
 
 Setting
-    Any item connected to the root that is not a section.  Settings will be reffered to as the name of the key for the setting.  Such as the :doc:lang``
+    Any item connected to the root that is not a section.  Settings will be reffered to as the name of the key for the setting.  Such as the :doc:`lang`
 
 .. tip::
     Sections or settings below in *italics* are optional.
