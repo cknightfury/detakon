@@ -17,24 +17,28 @@ A :ref:`detamap-source-format` setting is also required to specify the structure
 Source Settings
 ===============
 
+Settings to countrol reading of the data source.  :ref:`detamap-source-argument` and :ref:`detamap-source-format` settings are required.
+
 .. _detamap-source-argument:
 
 argument
 --------
 
-The ``arguments`` member describes what type of argument was passed to the :class:`detakon.detakon.Converter` as a ``source`` argument.
+The ``arguments`` setting describes what type of argument was passed to the :class:`detakon.detakon.Converter` as a ``source`` parameter.
+
+This setting is required.
 
 .. _detamap-source-argument-filepath:
 
 ``filepath``
 ^^^^^^^^^^^^
-    The "filepath" argument describes the source as being a file path.  It expects the source argument provided to :class:`detakon.detakon.Converter` to be a :py:class:`pathlib.Path`.
+    Supplying the ``"filepath"`` value to the argument setting describes the source as being a file path.  It expects the source argument provided to :class:`detakon.detakon.Converter` to be a :py:class:`pathlib.Path`.
 
-    A additional ``type`` member can be provided in the ``Source`` section to clarify the python type was provided as an argument, when the ``argument`` has multiple possible types.
+    A additional ``"type"`` setting can be provided in the ``Source`` section to modify the python type provided as an argument, when the ``argument`` can accept other types of values.
 
-    Other accepted ``type`` values:
+    Other accepted ``"type"`` values for ``"filepath"``:
 
-    * "str" - to be used if the filepath supplied is a string.
+    * ``"str"`` - to be used if the filepath supplied is a string.
 
 
 .. _detamap-source-format:
@@ -42,17 +46,19 @@ The ``arguments`` member describes what type of argument was passed to the :clas
 format
 ------
 
-The ``format`` member should specify the stucture or data type contained in the ``source`` to :class:`detakon.detakon.Converter`.
+The ``format`` setting should specify the stucture or data type contained in the ``source`` to :class:`detakon.detakon.Converter`.
 
-This key is required.
+This setting is required.
+
+.. _detamap-source-format-csv:
 
 ``csv``
 ^^^^^^^
-    To be used for data structed as a Comma Separated Value, or similar data that can be read by Python's :py:class:`csv.DictReader` library.
+    To be used for data structed as a Comma Separated Value (CSV), or similar data that can be read by Python's :py:class:`csv.DictReader` class in the :py:mod:`csv` module.
 
-    ``Detakon`` uses :py:class:`csv.DictReader` to read the file.  Any additional members can be provided that matches the parameters that :py:class:`csv.DictReader` accepts.
+    Detakon uses :py:class:`csv.DictReader` to read CSV source data.  Any additional settings can be provided that matches the parameters that :py:class:`csv.DictReader` accepts.
 
-    For example, a ``delimiter`` key can be supplied to change the delimiter used in the data, such as to read Tab Separated Value data.  Or an ``encoding`` key can be supplied to change the character encoding.
+    For example, a ``delimiter`` setting can be supplied to change the delimiter used in the data, such as to read Tab Separated Value (TSV) data, or an ``encoding`` setting can be supplied to change the character encoding.
 
     See the Python Docs for `DictReader <https://docs.python.org/3/library/csv.html#csv.DictReader>`_ for more details.
 
