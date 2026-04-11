@@ -118,6 +118,10 @@ A detamap JSON file may look similar to:
 
 Above sample is not all-inclusive.  Detamaps, source data, and output expect full chain of custody.  No security guarantees are made. Users are advised not to use untrusted, or malformed data.
 
+## Join us on Discord
+
+Join the [Detakon Discord Server](https://discord.gg/cKGFVS6pHk).
+
 ## License
 
 `detakon` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
