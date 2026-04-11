@@ -71,9 +71,8 @@ This setting is required.
     See the Python Docs for `DictWriter <https://docs.python.org/3/library/csv.html#csv.DictWriter>`_ for more details.
 
 
-########
 Examples
-########
+========
 
 .. code-block:: json-object
 
