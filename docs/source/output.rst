@@ -19,6 +19,8 @@ Output Settings
 
 Settings to control data being output.  :ref:`detamap-output-argument`, :ref:`detamap-output-fields`, and :ref:`detamap-output-format` settings are required.
 
+Detakon uses :py:meth:`pathlib.Path.open` to open files.  Any additional settings can be provided that matches the parameters that :py:meth:`pathlib.Path.open` accepts (except for mode).  For example, an ``encoding`` setting can be supplied to change the character encoding.
+
 .. _detamap-output-append:
 
 append
@@ -29,13 +31,14 @@ append
 
     An overwrite protection setting may be added in a future release.
 
-The ``append`` is used to determine if ouput will overwrite existing data, or append to it. This setting typically only applies to writing files, but may also apply in other settings where overwriting existing data is possible.
+The ``append`` setting is used to determine if ouput will overwrite existing data, or append to it. This setting typically only applies to writing files, but may also apply in other settings where overwriting existing data is possible.
 
 When ``append`` is set to ``true``, it is recommended to also set :ref:`detamap-output-omit_heading` to ``true``.  Otherwise, headings will be output as the first row for every append.
 
 Append is a boolean value that defaults to ``false``.
 
 Values:
+
 ``false`` (default)
 ^^^^^^^^^^^^^^^^^^^
     Output will overwrite existing files.
@@ -105,6 +108,7 @@ When :ref:`appending data <detamap-output-append>`, it is recommended to change 
 ``omit_heading`` is a boolean value that defaults to ``false``.
 
 Values:
+
 ``false`` (default)
 ^^^^^^^^^^^^^^^^^^^
     Output will contain headings.

@@ -19,6 +19,8 @@ Source Settings
 
 Settings to control reading of the data source.  :ref:`detamap-source-argument` and :ref:`detamap-source-format` settings are required.
 
+Detakon uses :py:meth:`pathlib.Path.open` to open files.  Any additional settings can be provided that matches the parameters that :py:meth:`pathlib.Path.open` accepts (except for mode).  For example, an ``encoding`` setting can be supplied to change the character encoding.
+
 .. _detamap-source-argument:
 
 argument
@@ -58,7 +60,7 @@ This setting is required.
 
     Detakon uses :py:class:`csv.DictReader` to read CSV source data.  Any additional settings can be provided that matches the parameters that :py:class:`csv.DictReader` accepts.
 
-    For example, a ``delimiter`` setting can be supplied to change the delimiter used in the data, such as to read Tab Separated Value (TSV) data, or an ``encoding`` setting can be supplied to change the character encoding.
+    For example, a ``delimiter`` setting can be supplied to change the delimiter used in the data, such as to read Tab Separated Value (TSV) data.
 
     See the Python Docs for `DictReader <https://docs.python.org/3/library/csv.html#csv.DictReader>`_ for more details.
 

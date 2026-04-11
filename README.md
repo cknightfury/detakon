@@ -7,7 +7,7 @@
 
 ## Description
 
-A data converter than uses configuration maps (referred to as detamaps) to map fields in the source data to output data, and perform operations on the data before outputting.  Detamaps may also contain configuration data for the data source and output, and defaults to use if fields are missing, or blank/empty.
+A data converter than uses configuration files (referred to as [detamaps](https://detakon.readthedocs.io/en/latest/detamap.html)) to map fields in the source data to output data, and perform operations on the data before outputting.  Detamaps may also contain configuration data for the data source and output, and defaults to use if fields are missing, or blank/empty.
 
 > [!NOTE]
 > Detakon is in early development and may have breaking changes between versions.  Detamaps, methods, and usage may change between minor versions until version 1.0 release.
@@ -16,10 +16,17 @@ A data converter than uses configuration maps (referred to as detamaps) to map f
 
 ## Table of Contents
 
+- [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Detamap Files](#detamap-files)
 - [License](#license)
+
+## Documentation
+
+The latest documentation can be found at [https://detakon.readthedocs.io/](https://detakon.readthedocs.io/)
+
+For older versions of documentation, they can be found inside your copy of the respository under the "/docs" directory and built using Sphinx.  The first version that contained documentation was v0.3.0.
 
 ## Installation
 
@@ -33,7 +40,7 @@ pip install detakon
 > Status: Currently in pre-release, as minimal viable product for CSV to CSV conversions only.  Not for usage in production systems, breaking changes are coming in future releases.
 > Some planned changes can be viewed in the [ROADMAP.md](https://github.com/cknightfury/detakon/blob/main/ROADMAP.md) file.
 
-Converter(detamap, source, destination)
+Converter(detamap, source, destination).process()
 
 Sample:
 
@@ -50,22 +57,18 @@ A detamap configuration file is used to provide all details necessary for the da
 
 A datamap must be a Python dictionary, or convertable to a Python dictionary.  Currently this means either a dictionary or JSON file (plans to add TOML support).
 
-A detamap MUST include the following key:value pairs:
-- "Mappings" with a sub-dictionary of source data field names as keys, mapped to output field names as values.
-- "Defaults" with a sub-dictionary of source field names that will supply a default value if either: (not currently implemented)
-    - Matching field was not found in source.
-    - Matching source data was empty, such as an empty string.
-- "Operations" with a list of operations to perform on source data: (not currently implemented)
+Please see the documentation for more detail on [detamaps](https://detakon.readthedocs.io/en/latest/detamap.html).  The Operations Section is left intact in the README, as the Operations Section of the documentation is still under development, but will be removed once the official documentation is considered sufficient to replace it.
+
+A detamap typically has the following sections:
+- "Mappings"
+- "Defaults"
+- "Operations" with a list of operations to perform on source data:
     - Example operations may be "upper", "convertValue", "strip", etc.
     - Operations entries are provided as dictionaries with sub-dictionaries for the fields the operations are to be performed on (single string value, list of strings, or "*" to indicate all fields) and an arguments key that contains a list of arguments to be passed.  Arguments may be an empty list if no arguments. A dictionary may be passed as a single argument, if the operation expects a dictionary as the argument, but must be passed withing a list.
     - Operations are performed in order they appear in the list.
     - Operations may be listed multiple times with different argument and field values.
-- "Source" with a sub-dictionary that defines the type of source being passed, and the arguments to pass to Path.open() if source is a file, or csv.DictReader if source is CSV data.
-    - Required keys:
-        - "argument" as type of argument being passed as the source argument to the Detakon initializer. Accepted values: "filepath".
-            - "type" key may be required depending on the argument being passed.
-- "Output" with a sub-dictionary that defines the type of output expected, and the arguments to pass to Path.open() if destination is a file, or csv.DictReader if output is CSV data. 
-    - "fields" sub-key as a list of strings corresponding to the output field names in the desired order.
+- "Source"
+- "Output"
 
 A detamap JSON file may look similar to:
 

@@ -6,6 +6,8 @@ Detamaps
 
 Detamaps are JSON or TOML configuration files that the ``detakon`` library uses to process data converstion.
 
+Internally, detamaps are stored as dictionaries.  A suitably formatted python dictionary may be passed as a detamap, as well as any other suitably formatted source that is converted to a dictionary.
+
 .. warning::
     TOML Detamap compatibility is still in development, and not available at this time. 
 
