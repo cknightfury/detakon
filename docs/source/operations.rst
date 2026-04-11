@@ -49,7 +49,7 @@ String Method Examples
 slice
 -----
 
-To enable Python like slices (such as "String to slice"[0, -3]), Detakon implements the slice operation using the Python :py:func:`slice` function to generate a slice_object.
+To enable Python like slices (such as ``"String to slice"[0, -3]``), Detakon implements the slice operation using the Python :py:func:`slice` function to generate a slice_object.
 
 The first value supplied in the ``args`` list should be the start for the slice, and the second should be the stop of the slice.
 
@@ -60,10 +60,80 @@ Indexing begins at 0, and negative values can be used.
 Slice Examples
 --------------
 
+.. code-block:: json-object
+
     "Operations": [
-        {"slice": {"fields": ["Patient Phone Number"],
+        {"slice": {"fields": ["Phone Number"],
                     "args": [0, -3]}}
     ],
+
+hashmap
+=======
+
+The hashmap operation takes a single dictionary argument to the ``args`` list, and replaces each key found in the source with the matching value.
+
+Hashmap Examples
+----------------
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"hashmap": {"fields": "Country",
+                        "args": [{
+                            "United States of America": "USA",
+                            "United States": "USA",
+                            "US": "USA",
+                            "Canada": "CAN",
+                            "Antarctica (the territory South of 60 deg S)": "Antarctica"}]
+                        }
+                    }
+    ]
+
+Filter Operations
+=================
+
+There are two operations to filter data.
+
+To use a filter on fields, supply two values to the ``args`` list.  The first value should be a conditional to test, and the second value should be the value to test the field against.
+
+exclude
+    Remove rows where the value of a given field meets a conidtional.
+
+include
+    Keeps only rows where the value of a given field meets a conditional.
+
+Filter Conditionals
+-------------------
+
+Filter comparison values and accepted aliases:
+
+* equal: "equal", "=", "==", "isequal", "is equal"
+* not equal: "not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="
+* in: "in", "contains", "substring"
+* not in: "not in", "notin"
+* greater than: "gt", "greaterthan", "greater than", ">"
+* less than: "lt", "lessthan", "less than", "<"
+* greater than or equal: "ge", "greater or equal", "greater than or equal", ">=", "≥"
+* less than or equal: "le", "less or equal", "less than or equal", "<=", "≤"
+* boolean: "bool", "boolean", "truthiness", "truthy", "falsy"
+* none: "isnone", "none"
+
+Filter Examples
+---------------
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"include": {"fields": "Last Name",
+                    "args": ["equal", "SMITH"]}}
+    ]
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"exclude": {"fields": "Total",
+                    "args": ["<", 100.00]}}
+    ]
 
 Examples
 ========
