@@ -8,7 +8,7 @@ The ``Operations`` section is a list of operations/transformations to be perform
 
 Each operation should be added as a dictionary to the ``Operations`` list in the order to be performed.
 
-The name of the operation to be performed should be provided as the key, which will contain a sub-dictionary of key-value pairs for ``fields``, ``args``, and ``kwargs``.
+The name of the operation to be performed should be provided as the key, which will contain a nested dictionary of key-value pairs for ``fields``, ``args``, and ``kwargs``.
 
 What needs to be provided as a value to each key is contextual to the operation being performed, but generally:
 
@@ -22,9 +22,51 @@ What needs to be provided as a value to each key is contextual to the operation 
 
 The ``Operations`` section is optional.
 
-########
+Available Operations
+====================
+
+Python String Methods
+---------------------
+
+Any Python :py:mod:`string` method should be accessible as an operation.
+
+The values supplied to the ``args`` list should be the same order of arguments supplied to the appropriate method.
+
+Appropriate keyword arguments can be supplied using a nested dictionary with the key ``kwargs``.
+
+If the method does not require any ``args`` or ``kwargs``, then these items can be omitted.
+
+String Method Examples
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"split": {"fields": "Phone 1", "kwargs": {"sep": "-"}}},
+        {"upper": {"fields": ["Email", "Last Name", "First Name"]}}
+    ]
+
+slice
+-----
+
+To enable Python like slices (such as "String to slice"[0, -3]), Detakon implements the slice operation using the Python :py:func:`slice` function to generate a slice_object.
+
+The first value supplied in the ``args`` list should be the start for the slice, and the second should be the stop of the slice.
+
+Values should be integers. If a non-integer value is provided, it is assumed to be None.
+
+Indexing begins at 0, and negative values can be used.
+
+Slice Examples
+--------------
+
+    "Operations": [
+        {"slice": {"fields": ["Patient Phone Number"],
+                    "args": [0, -3]}}
+    ],
+
 Examples
-########
+========
 
 .. code-block:: json-object
 

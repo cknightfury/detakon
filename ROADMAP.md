@@ -34,6 +34,7 @@ Some items may be large future features, intent to make a minor change in a futu
 - Add TOML support for detamaps
 - Add handling for non-CSV files
 - ~~Added documentation.  Wasn't even on my radar, but was clear Detamaps needed to have proper documentation.~~: View documentation on [Read the Docs](https://detakon.readthedocs.io/)
+- Add metadeta section to Detamaps, and getter/setters for the section.  Allow free form creation.  Intended for Detamap writers to include useful information about the detamap, such as the author, description, contact information, company.  Detakon is for business stuff, so probably good to know who in a company to reach out to for help.
 
 ## Wishlist
 > [!NOTE]
