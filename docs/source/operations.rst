@@ -135,6 +135,66 @@ Filter Examples
                     "args": ["<", 100.00]}}
     ]
 
+cast
+====
+
+The ``cast`` operation type casts fields into a different type.
+
+Available Types for Casting
+---------------------------
+
+Types values for casting, and accepted aliases:
+
+* int: "int", "integer", "long"
+* float: "float", "double"
+* Decimal: "decimal" (the python type :py:class:`decimal.Decimal`)
+* bool: "bool", "boolean"
+* str: "str", "string"
+
+Type Cast Examples
+------------------
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"cast": {"fields": "Total",
+                    "args": ["int"]}}
+    ]
+
+create field
+============
+
+The ``create field`` operation adds a new field to the source dictionary.
+
+By default new fields are empty strings.  If ``args`` are supplied, the new field will take the value supplied.
+
+Create Field Example
+--------------------
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"create": {"fields": "Total"}
+    ]
+
+duplicate
+=========
+
+The ``duplicate`` operation makes a duplicate of the field supplied to ``fields``.
+
+Only one field should be supplied to the ``fields`` key.  A new field will be created with matching values for every value supplied to ``args``.
+
+Raises a ValueError if any fields in ``args`` already exist.
+
+Duplicate Examples
+------------------
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"duplicate": {"fields": "Phone 1", "args": ["temp_phone"]}}
+    ]
+
 Examples
 ========
 
