@@ -19,6 +19,30 @@ Output Settings
 
 Settings to control data being output.  :ref:`detamap-output-argument`, :ref:`detamap-output-fields`, and :ref:`detamap-output-format` settings are required.
 
+.. _detamap-output-append:
+
+append
+------
+
+.. warning::
+    By default Detakon will overwrite existing files.  If you do not want this behavior, set append to true, and it will add to files instead.
+
+    An overwrite protection setting may be added in a future release.
+
+The ``append`` is used to determine if ouput will overwrite existing data, or append to it. This setting typically only applies to writing files, but may also apply in other settings where overwriting existing data is possible.
+
+When ``append`` is set to ``true``, it is recommended to also set :ref:`detamap-output-omit_heading` to ``true``.  Otherwise, headings will be output as the first row for every append.
+
+Append is a boolean value that defaults to ``false``.
+
+Values:
+``false`` (default)
+^^^^^^^^^^^^^^^^^^^
+    Output will overwrite existing files.
+
+``true``
+    Output will append to existing files.
+
 .. _detamap-output-argument:
 
 argument
@@ -70,6 +94,23 @@ This setting is required.
 
     See the Python Docs for `DictWriter <https://docs.python.org/3/library/csv.html#csv.DictWriter>`_ for more details.
 
+.. _detamap-output-omit_heading:
+
+omit_heading
+------------
+The ``omit_heading`` setting determines if output contains headings in text appropriate output formats.
+
+When :ref:`appending data <detamap-output-append>`, it is recommended to change this setting to ``true``.
+
+``omit_heading`` is a boolean value that defaults to ``false``.
+
+Values:
+``false`` (default)
+^^^^^^^^^^^^^^^^^^^
+    Output will contain headings.
+
+``true``
+    Output data will not contain headings.
 
 Examples
 ========
