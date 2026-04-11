@@ -57,18 +57,14 @@ A detamap configuration file is used to provide all details necessary for the da
 
 A datamap must be a Python dictionary, or convertable to a Python dictionary.  Currently this means either a dictionary or JSON file (plans to add TOML support).
 
-Please see the documentation for more detail on [detamaps](https://detakon.readthedocs.io/en/latest/detamap.html).  The Operations Section is left intact in the README, as the Operations Section of the documentation is still under development, but will be removed once the official documentation is considered sufficient to replace it.
+Please see the documentation for more detail on [detamaps](https://detakon.readthedocs.io/en/latest/detamap.html).
 
 A detamap typically has the following sections:
-- "Mappings"
-- "Defaults"
-- "Operations" with a list of operations to perform on source data:
-    - Example operations may be "upper", "convertValue", "strip", etc.
-    - Operations entries are provided as dictionaries with sub-dictionaries for the fields the operations are to be performed on (single string value, list of strings, or "*" to indicate all fields) and an arguments key that contains a list of arguments to be passed.  Arguments may be an empty list if no arguments. A dictionary may be passed as a single argument, if the operation expects a dictionary as the argument, but must be passed withing a list.
-    - Operations are performed in order they appear in the list.
-    - Operations may be listed multiple times with different argument and field values.
-- "Source"
-- "Output"
+- ["Mappings"](https://detakon.readthedocs.io/en/latest/mappings.html)
+- ["Defaults"](https://detakon.readthedocs.io/en/latest/defaults.html)
+- ["Operations"](https://detakon.readthedocs.io/en/latest/operations.html)
+- ["Source"](https://detakon.readthedocs.io/en/latest/source.html)
+- ["Output"](https://detakon.readthedocs.io/en/latest/output.html)
 
 A detamap JSON file may look similar to:
 
