@@ -12,12 +12,12 @@ Based on the context of the :ref:`detamap-source-argument` supplied, a ``type`` 
 
 Fox example, the :ref:`detamap-source-argument-filepath` value for an :ref:`detamap-source-argument` can accept a value of ``"str"`` if a string representation of a path is supplied, or a ``"path"`` if source is a :py:class:`pathlib.Path`.
 
-A :ref:`detamap-source-format` setting is also required to specify the structure or data type of of the data contained in ``source``.
+A :ref:`detamap-source-format` setting is also required to specify the structure or data type of the data contained in ``source``.
 
 Source Settings
 ===============
 
-Settings to countrol reading of the data source.  :ref:`detamap-source-argument` and :ref:`detamap-source-format` settings are required.
+Settings to control reading of the data source.  :ref:`detamap-source-argument` and :ref:`detamap-source-format` settings are required.
 
 .. _detamap-source-argument:
 
