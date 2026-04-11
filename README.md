@@ -47,8 +47,8 @@ Sample:
 ```
 from detakon.detakon import Converter
 
-converter = Converter("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
-converter.process()
+invoice_converter = Converter("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
+invoice_converter.process()
 ```
 
 ## Detamap Files

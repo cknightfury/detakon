@@ -28,11 +28,12 @@ Some items may be large future features, intent to make a minor change in a futu
         - ~~example: cast values to int or float before using an include or exclude filter for values < or > a given value.~~
     - ~~create new field operation~~
         - ~~Defaults section typically preferred, but create operation can be used to create fields needed for a users sequence of operations.~~
-    - add internationalization to detamaps
+    - ~~add internationalization to detamaps~~ Maybe?  Need to actually have a translation to test with to make sure it actually works.
 - Add detaplexing
 - Add detapipes
 - Add TOML support for detamaps
 - Add handling for non-CSV files
+- ~~Added documentation.  Wasn't even on my radar, but was clear Detamaps needed to have proper documentation.~~: View documentation on [Read the Docs](https://detakon.readthedocs.io/)
 
 ## Wishlist
 > [!NOTE]
