@@ -2,6 +2,17 @@
 # Operations accept a dictionary (row of data), args, kwargs.
 # Operations should return a dictionary (row of data), or None (if row should be discarded/filtered out).
 
+def slice_field(field: str, row: dict, *args, **kwargs) -> str:
+    """Perform a slice on a field from a row of data and return the row with the updated sliced field.
+    
+    :param field: The key for the value being sliced.
+    :param row: A dictionary of data that holds the field to be sliced.
+    :param *args: Arguments to be passed to python's slice object.
+    :param **kwargs: Keyword arguments to be passed to python's slice object."""
+    slice_object = slice(*args, **kwargs)
+    row[field] = row[field][slice_object]
+    return row
+
 def _filter(self, row_value, comparison: str, comparison_value) -> bool:
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.

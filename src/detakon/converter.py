@@ -6,6 +6,7 @@ from csv import DictReader, DictWriter
 from operator import methodcaller
 from decimal import Decimal
 from collections.abc import Generator
+from detakon import operations
 
 class Detakon():
     """detakon uses a detakon map to convert data."""
@@ -202,8 +203,7 @@ class Detakon():
                 if operation in dir(str):
                     row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("slice", ["slice"]):
-                    slice_object = slice(*(x if isinstance(x, int) else None for x in arguments))
-                    row[field] = row[field][slice_object]
+                    row = operations.slice_field(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("hashmap", ["hashmap", "dictionary", "dict"]):
                     # print(f"before {operation}: {row[field]}")
                     hashmap = arguments[0]
