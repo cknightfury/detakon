@@ -206,9 +206,7 @@ class Detakon():
                     row = operations.slice_field(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("hashmap", ["hashmap", "dictionary", "dict"]):
                     # print(f"before {operation}: {row[field]}")
-                    hashmap = arguments[0]
-                    if row[field] in hashmap.keys():
-                        row[field] = hashmap[row[field]]
+                    row = operations.hashmap(field, row, *arguments, **keyword_arguments)
                     # print(f"after: {row[field]}")
                 elif operation.lower() in self.lang.get("exclude", ["exclude"]):
                     if self._filter(row[field], *arguments):
