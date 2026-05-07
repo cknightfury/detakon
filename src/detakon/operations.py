@@ -27,7 +27,7 @@ def hashmap(field: str, row: dict, *args, **kwargs) -> dict:
         row[field] = hashmap[row[field]]
     return row
 
-def filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us")) -> bool:
+def filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) -> bool:
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.
     
@@ -71,7 +71,7 @@ def filter(row_value: dict, comparison: str, comparison_value, *args, language_m
     else:
         raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
-def cast_type(value, data_type: str, *args, language_map: dict = load_language("en-us")):
+def cast_type(value, data_type: str, *args, language_map: dict = load_language("en-us"), **kwargs):
     """Cast value into the given type.  If type does not match an expected value raise a ValueError.
     
     Types values for casting, and accepted aliases:

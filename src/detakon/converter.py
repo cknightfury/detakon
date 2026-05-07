@@ -211,13 +211,13 @@ class Detakon():
                     row = operations.hashmap(field, row, *arguments, **keyword_arguments)
                     # print(f"after: {row[field]}")
                 elif operation.lower() in self.lang.get("exclude", ["exclude"]):
-                    if operations.filter(row[field], *arguments, language_map=self.lang):
+                    if operations.filter(row[field], *arguments, language_map=self.lang, **keyword_arguments):
                         return None
                 elif operation.lower() in self.lang.get("include", ["include"]):
-                    if not operations.filter(row[field], *arguments, language_map=self.lang):
+                    if not operations.filter(row[field], *arguments, language_map=self.lang, **keyword_arguments):
                         return None
                 elif operation.lower() in self.lang.get("cast", ["cast", "converttype", "convert type", "type cast", "typecast"]):
-                    row[field] = operations.cast_type(row[field], *arguments, language_map=self.lang)
+                    row[field] = operations.cast_type(row[field], *arguments, language_map=self.lang, **keyword_arguments)
                 # creates a field if it does not exist. By default an empty string, otherwise equal to arguments.
                 elif operation.lower() in self.lang.get("create field", ["create", "new", "create field", "new field"]):
                     if field not in row:
