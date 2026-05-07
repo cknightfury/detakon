@@ -212,7 +212,7 @@ class Detakon():
                     if self._filter(row[field], *arguments):
                         return None
                 elif operation.lower() in self.lang.get("include", ["include"]):
-                    if not self._filter(row[field], *arguments):
+                    if not operations.filter(self.lang, row[field], *arguments):
                         return None
                 elif operation.lower() in self.lang.get("cast", ["cast", "converttype", "convert type", "type cast", "typecast"]):
                     row[field] = self._cast_type(row[field], arguments)

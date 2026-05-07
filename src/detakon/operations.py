@@ -25,8 +25,7 @@ def hashmap(field: str, row: dict, *args, **kwargs) -> dict:
         row[field] = hashmap[row[field]]
     return row
 
-
-def _filter(self, row_value, comparison: str, comparison_value) -> bool:
+def filter(language_map: dict, row_value: dict, comparison: str, comparison_value, *args) -> bool:
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.
     
@@ -47,30 +46,30 @@ def _filter(self, row_value, comparison: str, comparison_value) -> bool:
     :param comparison: The filter comparison operator to be used for the comparison.
     :param comparison_value: The value to compare the source value against.
     :returns: bool"""
-    if comparison.lower() in self.lang.get("filter_equal", ["equal", "=", "==", "isequal", "is equal"]):
+    if comparison.lower() in language_map.get("filter_equal", ["equal", "=", "==", "isequal", "is equal"]):
         return row_value == comparison_value
-    elif comparison.lower() in self.lang.get("filter_not_equal", ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]):
+    elif comparison.lower() in language_map.get("filter_not_equal", ["not equal", "notequal", "!=", "~=", "<>", "not equals to", "not ="]):
         return row_value != comparison_value
-    elif comparison.lower() in self.lang.get("filter_in", ["in", "contains", "substring"]):
+    elif comparison.lower() in language_map.get("filter_in", ["in", "contains", "substring"]):
         return comparison_value in row_value
-    elif comparison.lower() in self.lang.get("filter_not_in", ["not in", "notin"]):
+    elif comparison.lower() in language_map.get("filter_not_in", ["not in", "notin"]):
         return comparison_value not in row_value
-    elif comparison.lower() in self.lang.get("filter_greater_than", ["gt", "greaterthan", "greater than", ">"]):
+    elif comparison.lower() in language_map.get("filter_greater_than", ["gt", "greaterthan", "greater than", ">"]):
         return row_value > comparison_value
-    elif comparison.lower() in self.lang.get("filter_less_than", ["lt", "lessthan", "less than", "<"]):
+    elif comparison.lower() in language_map.get("filter_less_than", ["lt", "lessthan", "less than", "<"]):
         return row_value < comparison_value
-    elif comparison.lower() in self.lang.get("filter_greater_or_equal", ["ge", "greater or equal", "greater than or equal", ">=", "≥"]):
+    elif comparison.lower() in language_map.get("filter_greater_or_equal", ["ge", "greater or equal", "greater than or equal", ">=", "≥"]):
         return row_value >= comparison_value
-    elif comparison.lower() in self.lang.get("filter_less_or_equal", ["le", "less or equal", "less than or equal", "<=", "≤"]):
+    elif comparison.lower() in language_map.get("filter_less_or_equal", ["le", "less or equal", "less than or equal", "<=", "≤"]):
         return row_value <= comparison_value
-    elif comparison.lower() in self.lang.get("filter_boolean", ["bool", "boolean", "truthiness", "truthy", "falsy"]):
+    elif comparison.lower() in language_map.get("filter_boolean", ["bool", "boolean", "truthiness", "truthy", "falsy"]):
         return bool(row_value)
-    elif comparison.lower() in self.lang.get("filter_none", ["isnone", "none"]):
+    elif comparison.lower() in language_map.get("filter_none", ["isnone", "none"]):
         return row_value is None
     else:
         raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
-def _cast_type(self, value, data_type: str):
+def _cast_type(value, data_type: str):
     """Cast value into the given type.  If type does not match an expected value raise a ValueError.
     
     Types values for casting, and accepted aliases:
