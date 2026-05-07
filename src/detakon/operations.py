@@ -71,7 +71,7 @@ def filter(row_value: dict, comparison: str, comparison_value, *args, language_m
     else:
         raise ValueError(f"Could not find match for comparison operator: {comparison}")
 
-def _cast_type(value, data_type: str):
+def cast_type(value, data_type: str, *args, language_map: dict = load_language("en-us")):
     """Cast value into the given type.  If type does not match an expected value raise a ValueError.
     
     Types values for casting, and accepted aliases:
@@ -85,15 +85,15 @@ def _cast_type(value, data_type: str):
     :param value: value from source to cast into new type
     :param data_type: type to cast value to
     :returns: value as new type"""
-    if data_type.lower() in self.lang.get("cast_int", ["int", "integer", "long"]):
+    if data_type.lower() in language_map.get("cast_int", ["int", "integer", "long"]):
         return int(value)
-    elif data_type.lower() in self.lang.get("cast_float", ["float", "double"]):
+    elif data_type.lower() in language_map.get("cast_float", ["float", "double"]):
         return float(value)
-    elif data_type.lower() in self.lang.get("cast_decimal", ["decimal"]):
+    elif data_type.lower() in language_map.get("cast_decimal", ["decimal"]):
         return Decimal(value)
-    elif data_type.lower() in self.lang.get("cast_boolean", ["bool", "boolean"]):
+    elif data_type.lower() in language_map.get("cast_boolean", ["bool", "boolean"]):
         return bool(value)
-    elif data_type.lower() in self.lang.get("cast_string", ["str", "string"]):
+    elif data_type.lower() in language_map.get("cast_string", ["str", "string"]):
         return str(value)
     else:
         raise ValueError(f"Unrecognized type value for cast: {data_type}")

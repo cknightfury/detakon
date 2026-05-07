@@ -197,6 +197,7 @@ class Detakon():
                 elif isinstance(fields, str):
                     fields = [fields]
                 arguments = info.get(self.lang.get("arguments"), [])
+                arguments = arguments if isinstance(arguments, list) else [arguments]
                 keyword_arguments = info.get(self.lang.get("keyword_arguments"), dict())
 
             for field in fields:
@@ -216,7 +217,7 @@ class Detakon():
                     if not operations.filter(row[field], *arguments, language_map=self.lang):
                         return None
                 elif operation.lower() in self.lang.get("cast", ["cast", "converttype", "convert type", "type cast", "typecast"]):
-                    row[field] = self._cast_type(row[field], arguments)
+                    row[field] = operations.cast_type(row[field], *arguments, language_map=self.lang)
                 # creates a field if it does not exist. By default an empty string, otherwise equal to arguments.
                 elif operation.lower() in self.lang.get("create field", ["create", "new", "create field", "new field"]):
                     if field not in row:
@@ -272,30 +273,3 @@ class Detakon():
                         return json.load(file)
             except Exception as e:
                 raise Exception(f"Failed to load JSON file: {e}")
-
-    def _cast_type(self, value, data_type: str):
-        """Cast value into the given type.  If type does not match an expected value raise a ValueError.
-        
-        Types values for casting, and accepted aliases:
-
-        * int: "int", "integer", "long"
-        * float: "float", "double"
-        * Decimal: "decimal" (specifically the python type decimal.Decimal)
-        * bool: "bool", "boolean"
-        * str: "str", "string"
-        
-        :param value: value from source to cast into new type
-        :param data_type: type to cast value to
-        :returns: value as new type"""
-        if data_type.lower() in self.lang.get("cast_int", ["int", "integer", "long"]):
-            return int(value)
-        elif data_type.lower() in self.lang.get("cast_float", ["float", "double"]):
-            return float(value)
-        elif data_type.lower() in self.lang.get("cast_decimal", ["decimal"]):
-            return Decimal(value)
-        elif data_type.lower() in self.lang.get("cast_boolean", ["bool", "boolean"]):
-            return bool(value)
-        elif data_type.lower() in self.lang.get("cast_string", ["str", "string"]):
-            return str(value)
-        else:
-            raise ValueError(f"Unrecognized type value for cast: {data_type}")
