@@ -47,6 +47,7 @@ def filter(row_value: dict, comparison: str, comparison_value, *args, language_m
     :param row_value: The value from the data source row to compare against comparison_value.
     :param comparison: The filter comparison operator to be used for the comparison.
     :param comparison_value: The value to compare the source value against.
+    :param language_map: The language map to use for comparation aliases.  Defaults to "en-us".
     :returns: bool"""
     if comparison.lower() in language_map.get("filter_equal", ["equal", "=", "==", "isequal", "is equal"]):
         return row_value == comparison_value
@@ -84,6 +85,7 @@ def cast_type(value, data_type: str, *args, language_map: dict = load_language("
     
     :param value: value from source to cast into new type
     :param data_type: type to cast value to
+    :param language_map: The language map to use for comparation aliases.  Defaults to "en-us".
     :returns: value as new type"""
     if data_type.lower() in language_map.get("cast_int", ["int", "integer", "long"]):
         return int(value)
