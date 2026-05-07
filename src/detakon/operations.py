@@ -2,6 +2,8 @@
 # Operations accept a dictionary (row of data), args, kwargs.
 # Operations should return a dictionary (row of data), or None (if row should be discarded/filtered out).
 
+from detakon.translation_framework import load_language
+
 def slice_field(field: str, row: dict, *args, **kwargs) -> dict:
     """Perform a slice on a field from a row of data and return the row with the updated sliced field.
     
@@ -25,7 +27,7 @@ def hashmap(field: str, row: dict, *args, **kwargs) -> dict:
         row[field] = hashmap[row[field]]
     return row
 
-def filter(language_map: dict, row_value: dict, comparison: str, comparison_value, *args) -> bool:
+def filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us")) -> bool:
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.
     
