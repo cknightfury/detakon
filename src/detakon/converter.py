@@ -34,7 +34,7 @@ class Detakon():
         
         :param detamap: New detamap.  Default to reloading self.original_detamap (which is stored during __init__)."""
         self.detamap: dict = self._load_detamap(self.original_detamap) if detamap is None else self._load_detamap(detamap)
-        self.lang: dict = self._load_language(self.detamap.get("lang", "en-us"))
+        self.lang: dict = load_language(self.detamap.get("lang", "en-us"))
         self.mappings: dict = self.detamap[self.lang["Mappings"]]
         self.defaults: dict = self.detamap.get(self.lang["Defaults"], dict())
         self.operations: dict = self.detamap.get(self.lang["Operations"], dict())
@@ -209,7 +209,7 @@ class Detakon():
                     row = operations.hashmap(field, row, *arguments, **keyword_arguments)
                     # print(f"after: {row[field]}")
                 elif operation.lower() in self.lang.get("exclude", ["exclude"]):
-                    if self._filter(row[field], *arguments):
+                    if operations.filter(self.lang, row[field], *arguments):
                         return None
                 elif operation.lower() in self.lang.get("include", ["include"]):
                     if not operations.filter(self.lang, row[field], *arguments):
@@ -343,17 +343,17 @@ class Detakon():
         else:
             raise ValueError(f"Unrecognized type value for cast: {data_type}")
 
-    def _load_language(self, lang: str = "en-us") -> dict:
-        """Returns translation dictionary for specified language.
+def load_language(self, lang: str = "en-us") -> dict:
+    """Returns translation dictionary for specified language.
 
-        Language should be specified as ISO 639 language codes and ISO 3166 country codes seperated by a dash (-).  Default is en-us.
+    Language should be specified as ISO 639 language codes and ISO 3166 country codes seperated by a dash (-).  Default is en-us.
 
-        ISO 639 set 1, 2, and 3 codes can be used.  `List of ISO 639 language codes <https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes>`_
+    ISO 639 set 1, 2, and 3 codes can be used.  `List of ISO 639 language codes <https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes>`_
 
-        ISO 3166 A-2, A-3, and Num. codes can be used. `List of ISO 3166 country codes <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes>`_
+    ISO 3166 A-2, A-3, and Num. codes can be used. `List of ISO 3166 country codes <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes>`_
 
-        :param lang: language code for specified language.  Defaults to en-us.
-        :returns: translation dictionary."""
-        if lang.lower() in ["english", "en", "eng", "en-us", "en-usa", "en-840", "eng-us", "eng-usa", "eng-840"]:
-            from .languages import en_us
-            return en_us.translation
+    :param lang: language code for specified language.  Defaults to en-us.
+    :returns: translation dictionary."""
+    if lang.lower() in ["english", "en", "eng", "en-us", "en-usa", "en-840", "eng-us", "eng-usa", "eng-840"]:
+        from .languages import en_us
+        return en_us.translation
