@@ -31,6 +31,10 @@ def filter(row_value: dict, comparison: str, comparison_value, *args, language_m
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.
     
+    For clarity, please see shorter version of function header below:
+
+    ```detakon.operations.filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) → bool```
+
     Filter comparison values and accepted aliases:
 
     * equal: "equal", "=", "==", "isequal", "is equal"
@@ -75,6 +79,10 @@ def filter(row_value: dict, comparison: str, comparison_value, *args, language_m
 def cast_type(value, data_type: str, *args, language_map: dict = load_language("en-us"), **kwargs):
     """Cast value into the given type.  If type does not match an expected value raise a ValueError.
     
+    For clarity, please see shorter version of function header below:
+    
+    ```detakon.operations.cast_type(value, data_type: str, *args, language_map: dict = load_language("en-us"), **kwargs)```
+
     Types values for casting, and accepted aliases:
 
     * int: "int", "integer", "long"
