@@ -27,13 +27,27 @@ def hashmap(field: str, row: dict, *args, **kwargs) -> dict:
         row[field] = hashmap[row[field]]
     return row
 
+def create_field(field: str, row: dict, *args, **kwargs) -> dict:
+    """Add field to source dictionary. By default new fields are empty strings. If args are supplied, the new field will take the value supplied.
+    
+    :param field: The name of the field to be created.
+    :param row: A dictionary of data that holds the current state of the row.
+    :param *args: If supplied, args[0] will be used to set the value of the field.
+    :param **kwargs: Keyword arguments to be passed."""
+
+    if field not in row:
+        if len(args) > 0:
+            row[field] = args[0]
+        else:
+            row[field] = ""
+
 def filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) -> bool:
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.
     
     For clarity, please see shorter version of function header below:
 
-    ```detakon.operations.filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) → bool```
+    ``detakon.operations.filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) → bool``
 
     Filter comparison values and accepted aliases:
 
@@ -81,7 +95,7 @@ def cast_type(value, data_type: str, *args, language_map: dict = load_language("
     
     For clarity, please see shorter version of function header below:
     
-    ```detakon.operations.cast_type(value, data_type: str, *args, language_map: dict = load_language("en-us"), **kwargs)```
+    ``detakon.operations.cast_type(value, data_type: str, *args, language_map: dict = load_language("en-us"), **kwargs)``
 
     Types values for casting, and accepted aliases:
 

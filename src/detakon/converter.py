@@ -220,11 +220,7 @@ class Detakon():
                     row[field] = operations.cast_type(row[field], *arguments, language_map=self.lang, **keyword_arguments)
                 # creates a field if it does not exist. By default an empty string, otherwise equal to arguments.
                 elif operation.lower() in self.lang.get("create field", ["create", "new", "create field", "new field"]):
-                    if field not in row:
-                        if len(arguments) > 0:
-                            row[field] = arguments
-                        else:
-                            row[field] = ""
+                    row = row[field] = operations.create_field(row[field], row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("duplicate", ["duplicate"]):
                     for argument in arguments:
                         if argument not in row:
