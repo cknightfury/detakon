@@ -28,7 +28,11 @@ def hashmap(field: str, row: dict, *args, **kwargs) -> dict:
     return row
 
 def create_field(field: str, row: dict, *args, **kwargs) -> dict:
-    """Add field to source dictionary. By default new fields are empty strings. If args are supplied, the new field will take the value supplied.
+    """Add field to source dictionary. By default new fields are empty strings.
+
+    If args are supplied:
+    * List of length one: Assign first value to field.
+    * List of length greater than one: Assign list of args to field.
     
     :param field: The name of the field to be created.
     :param row: A dictionary of data that holds the current state of the row.
@@ -36,7 +40,9 @@ def create_field(field: str, row: dict, *args, **kwargs) -> dict:
     :param **kwargs: Keyword arguments to be passed."""
 
     if field not in row:
-        if len(args) > 0:
+        if len(args) > 1:
+            row[field] = args
+        elif len(args) > 0:
             row[field] = args[0]
         else:
             row[field] = ""
