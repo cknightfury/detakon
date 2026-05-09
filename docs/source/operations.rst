@@ -56,7 +56,9 @@ create field
 
 The ``create field`` operation adds a new field to the source dictionary.
 
-By default new fields are empty strings.  If ``args`` are supplied, the new field will take the value supplied.
+By default new fields are empty strings.
+
+If ``args`` are supplied, the new field will take the value supplied if there is only one argument, or take the whole list of arguments if the length of args is greater than 1.
 
 Create Field Example
 ^^^^^^^^^^^^^^^^^^^^
