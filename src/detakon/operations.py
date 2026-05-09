@@ -47,6 +47,21 @@ def create_field(field: str, row: dict, *args, **kwargs) -> dict:
         else:
             row[field] = ""
 
+def duplicate(field: str, row: dict, *args, **kwargs) -> dict:
+    """Creates new fields with the value contained in field.  Each value in args will be the name of the new fields created by duplicating field.
+    
+    :param field: The name of the field to be duplicated.
+    :param row: A dictionary of data that holds the current state of the row.
+    :param *args: A list of fields be created with the duplicated value.
+    :param **kwargs: Keyword arguments to be passed."""
+
+    for argument in args:
+        if argument not in row:
+            row[argument] = row[field]
+        else:
+            raise ValueError(f"Operation '{operation}' failed: new field <{argument}> already exists.")
+    return row
+
 def filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) -> bool:
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.
