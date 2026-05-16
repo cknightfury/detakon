@@ -222,7 +222,7 @@ class Detakon():
                     row = operations.create_field(row[field], row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("duplicate", ["duplicate"]):
                     row = operations.duplicate(row[field], row, *arguments, **keyword_arguments)
-                elif operation.lower() in self.lang.get("outofplace", ["change place", "change_place", "changeplace", "outofplace", "out of place", "out-of-place", "out_of_place", "not-in-place", "not in place", "not_in_place"]):
+                elif operation.lower() in self.lang.get("outofplace", ["change place", "change_place", "changeplace", "change-place", "outofplace", "out of place", "out-of-place", "out_of_place", "not-in-place", "not in place", "not_in_place"]):
                     row = operations.change_place(row[field], row, arguments[0], arguments[1], arguments[2:], keyword_arguments, language_map=self.lang)
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:

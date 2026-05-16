@@ -51,6 +51,33 @@ Type Cast Examples
                     "args": ["int"]}}
     ]
 
+change place
+------------
+
+The change place operation changes an in-place operation into an out-of-place operation.
+
+Can only be used with supported operations.  Unsupported operations will simply return the row unchanged.
+
+Supported operations:
+* hashmap
+* slice
+
+change place Examples
+^^^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"change-place": {"fields": "Patient Country",
+                            "args": ["Country Code", "hashmap", {
+                                "United States of America": "USA",
+                                "United States": "USA",
+                                "US": "USA",
+                                "Canada": "CAN",
+                                "Antarctica (the territory South of 60 deg S)": "Antarctica"}]}}
+    ]
+
+
 create field
 ------------
 
