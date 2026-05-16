@@ -2,7 +2,29 @@
 # Operations accept a dictionary (row of data), args, kwargs.
 # Operations should return a dictionary (row of data), or None (if row should be discarded/filtered out).
 
+# Operations are typically performed in-place unless otherwise specified.  change_place can be used to use the field as a source, but output result of the operation to another field.
+
 from detakon.translation_framework import load_language
+
+def change_place(field: str, row: dict, destination: str, operation: str, args, kwargs, language_map: dict) -> dict:
+    """Changes an in-place operation into an out-of-place operation.
+    
+    Calls the specified operation on a copy of the row, and merge the specified row from the copy back into the original with a different key.
+    
+    :param field: Field used as data source.
+    :param row: A dictionary of data that holds the field to be operated on.
+    :param destination: The name of the field to store the result of the operation.
+    :param *args: Arguments to be passed to the operation.
+    :param **kwargs: Keyword arguments to be passed to the operation."""
+    if operation in language_map.get("slice"):
+        copy_row = slice_field(field, row.copy(), *args, **kwargs)
+    elif operation in language_map.get("hashmap"):
+        copy_row = hashmap(field, row.copy(), *args, **kwargs)
+    else:
+        return row
+    row[destination] = copy_row[field]
+    return row
+
 
 def slice_field(field: str, row: dict, *args, **kwargs) -> dict:
     """Perform a slice on a field from a row of data and return the row with the updated sliced field.
@@ -46,6 +68,7 @@ def create_field(field: str, row: dict, *args, **kwargs) -> dict:
             row[field] = args[0]
         else:
             row[field] = ""
+    return row
 
 def duplicate(field: str, row: dict, *args, **kwargs) -> dict:
     """Creates new fields with the value contained in field.  Each value in args will be the name of the new fields created by duplicating field.
