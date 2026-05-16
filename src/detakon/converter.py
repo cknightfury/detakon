@@ -219,11 +219,11 @@ class Detakon():
                 elif operation.lower() in self.lang.get("cast", ["cast", "converttype", "convert type", "type cast", "typecast"]):
                     row[field] = operations.cast_type(row[field], *arguments, language_map=self.lang, **keyword_arguments)
                 elif operation.lower() in self.lang.get("create field", ["create", "new", "create field", "new field"]):
-                    row = row[field] = operations.create_field(row[field], row, *arguments, **keyword_arguments)
+                    row = operations.create_field(row[field], row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("duplicate", ["duplicate"]):
-                    row = row[field] = operations.duplicate(row[field], row, *arguments, **keyword_arguments)
+                    row = operations.duplicate(row[field], row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("outofplace", ["change place", "change_place", "changeplace", "outofplace", "out of place", "out-of-place", "out_of_place", "not-in-place", "not in place", "not_in_place"]):
-                    row = row[field] = operations.change_place(row[field], row, arguments[0], arguments[1], arguments[2:], keyword_arguments, language_map=self.lang)
+                    row = operations.change_place(row[field], row, arguments[0], arguments[1], arguments[2:], keyword_arguments, language_map=self.lang)
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:
                     pass
