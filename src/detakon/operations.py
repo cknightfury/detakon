@@ -5,6 +5,7 @@
 # Operations are typically performed in-place unless otherwise specified.  change_place can be used to use the field as a source, but output result of the operation to another field.
 
 from detakon.translation_framework import load_language
+from decimal import Decimal
 
 def string_join(field: str, row: dict, *args, **kwargs) -> dict:
     """Calls str.join on list in specified field and uses args[0] as the separator for the resulting string.  Return the updated row.
@@ -93,7 +94,7 @@ def duplicate(field: str, row: dict, *args, **kwargs) -> dict:
         if argument not in row:
             row[argument] = row[field]
         else:
-            raise ValueError(f"Operation '{operation}' failed: new field <{argument}> already exists.")
+            raise ValueError(f"Operation <duplicate> failed: new field <{argument}> already exists.")
     return row
 
 def filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) -> bool:
