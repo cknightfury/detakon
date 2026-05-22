@@ -202,7 +202,9 @@ class Detakon():
 
             for field in fields:
                 # process string operations
-                if operation in dir(str):
+                if operation.lower() in self.lang.get("join", ["join"]):
+                    row = operations.string_join(row[field], row, *arguments, **keyword_arguments)
+                elif operation in dir(str):
                     row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("slice", ["slice"]):
                     row = operations.slice_field(field, row, *arguments, **keyword_arguments)

@@ -224,6 +224,24 @@ String Method Examples
         {"upper": {"fields": ["Email", "Last Name", "First Name"]}}
     ]
 
+join
+----
+
+Join operation calls the string method to join a list of strings.  Due to how the str.join method works, this operation was added to make it work correctly with Detamaps.
+
+The fields values are which fields contain lists to join, and args[0] should contain the separator to be joined on.
+
+Certain operations (such as split), may result in lists, which can later be joined with this operation.
+
+String Method Examples
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"join": {"fields": "filepath", "args": "_"}}
+    ]
+
 Complete Operations Section Examples
 ====================================
 

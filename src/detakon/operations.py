@@ -6,6 +6,17 @@
 
 from detakon.translation_framework import load_language
 
+def string_join(field: str, row: dict, *args, **kwargs) -> dict:
+    """Calls str.join on list in specified field and uses args[0] as the separator for the resulting string.  Return the updated row.
+    
+    :param field: Field used as data source.  Must contain a list that str.join can operate on.
+    :param row: A dictionary of data that holds the field to be operated on.
+    :param *args: List of which args[0] is expected to be a string to be used as a separator.
+    :param **kwargs: Keyword arguments to be passed."""
+    separator = args[0]
+    row[field] = separator.join(row[field])
+    return row
+
 def change_place(field: str, row: dict, destination: str, operation: str, args, kwargs, language_map: dict) -> dict:
     """Changes an in-place operation into an out-of-place operation.
     
