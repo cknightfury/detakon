@@ -17,7 +17,7 @@ translation = {
         "cast": ["cast", "converttype", "convert type", "type cast", "typecast"],
         "create field": ["create", "new", "create field", "new field"],
         "duplicate": ["duplicate"],
-        "duplicate_rows": ["duplicate_rows", "duplicate rows", "duplicate-row", "duplicate_row", "duplicate row", "duplicate-rows", "union duplicates"]
+        "duplicate_rows": ["duplicate_rows", "duplicate rows", "duplicate-row", "duplicate_row", "duplicate row", "duplicate-rows", "union duplicates"],
         "outofplace": ["change place", "change_place", "changeplace", "change-place", "outofplace", "out of place", "out-of-place", "out_of_place", "not-in-place", "not in place", "not_in_place"],
         # Include and exclude filters
         "filter_equal": ["equal", "=", "==", "isequal", "is equal"],
