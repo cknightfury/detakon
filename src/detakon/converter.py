@@ -163,7 +163,11 @@ class Detakon():
                             # process operations
                             row = self._process_operations(row)
                             if row is not None:
-                                yield row
+                                if "detakon_duplicate_rows" in row:
+                                    for each in range(row["detakon_duplicate_rows"]):
+                                        yield row
+                                else:
+                                    yield row
 
         # elif isinstance(source, TextIOWrapper):
         #     pass
