@@ -97,6 +97,19 @@ def duplicate(field: str, row: dict, *args, **kwargs) -> dict:
             raise ValueError(f"Operation <duplicate> failed: new field <{argument}> already exists.")
     return row
 
+def duplicate_row(field: str, row: dict, *args, **kwargs) -> dict:
+    """Causes row to be appended to output multiple times based on value of field. Value must be int or castable into int.
+    
+    Adds a special key to row called ``detakon_duplicate_rows`` that contains an int quantity.
+
+    :param field: Field with the value specifying quantity of times to output row.
+    :param row: A dictionary of data that holds the current state of the row.
+    :param *args: Additional arguments being passed.
+    :param **kwargs: Keyword arguments to be passed."""
+
+    row["detakon_duplicate_rows"] = int(row[field])
+    return row
+
 def filter(row_value: dict, comparison: str, comparison_value, *args, language_map: dict = load_language("en-us"), **kwargs) -> bool:
     """Take a string indicating a comparison to make, and a value that comparison will be made to, and return a bool indicating if that comparison is met.
     Designed for use in exclude and include filter operations.
