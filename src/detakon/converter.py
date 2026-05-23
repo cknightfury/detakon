@@ -203,7 +203,7 @@ class Detakon():
             for field in fields:
                 # process string operations
                 if operation.lower() in self.lang.get("join", ["join"]):
-                    row = operations.string_join(row[field], row, *arguments, **keyword_arguments)
+                    row = operations.string_join(field, row, *arguments, **keyword_arguments)
                 elif operation in dir(str):
                     row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("slice", ["slice"]):
@@ -221,11 +221,11 @@ class Detakon():
                 elif operation.lower() in self.lang.get("cast", ["cast", "converttype", "convert type", "type cast", "typecast"]):
                     row[field] = operations.cast_type(row[field], *arguments, language_map=self.lang, **keyword_arguments)
                 elif operation.lower() in self.lang.get("create field", ["create", "new", "create field", "new field"]):
-                    row = operations.create_field(row[field], row, *arguments, **keyword_arguments)
+                    row = operations.create_field(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("duplicate", ["duplicate"]):
-                    row = operations.duplicate(row[field], row, *arguments, **keyword_arguments)
+                    row = operations.duplicate(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("outofplace", ["change place", "change_place", "changeplace", "change-place", "outofplace", "out of place", "out-of-place", "out_of_place", "not-in-place", "not in place", "not_in_place"]):
-                    row = operations.change_place(row[field], row, arguments[0], arguments[1], arguments[2:], keyword_arguments, language_map=self.lang)
+                    row = operations.change_place(field, row, arguments[0], arguments[1], arguments[2:], keyword_arguments, language_map=self.lang)
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:
                     pass
