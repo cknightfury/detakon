@@ -40,14 +40,14 @@ pip install detakon
 > Status: Currently in pre-release, as minimal viable product for CSV to CSV conversions only.  Not for usage in production systems, breaking changes are coming in future releases.
 > Some planned changes can be viewed in the [ROADMAP.md](https://github.com/cknightfury/detakon/blob/main/ROADMAP.md) file.
 
-Converter(detamap, source, destination).process()
+Detakon(detamap, source, destination).process()
 
 Sample:
 
 ```
-from detakon.detakon import Converter
+from detakon.converter import Detakon
 
-invoice_converter = Converter("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
+invoice_converter = Detakon("invoice_detamap.json", "data_dump_2026-01-01.csv", "invoice_2026-01-01.csv")
 invoice_converter.process()
 ```
 
