@@ -9,6 +9,7 @@ translation = {
         "fields": "fields",
         "arguments": "args",
         "keyword_arguments": "kwargs",
+        "list": ["list", "make_list"],
         "join": ["join"],
         "hashmap": ["hashmap", "dictionary", "dict"],
         "slice": ["slice"],

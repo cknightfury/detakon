@@ -182,6 +182,25 @@ Hashmap Examples
                     }
     ]
 
+list
+----
+
+Make a list at ``field`` using all fields supplied as ``args``.  If ``field`` is also included in ``args``, it's original value will be lost.
+
+Only one field should typically be supplied to ``fields``.  If multiple ``fields`` are supplied, then the same list will be assigned to each provided field.
+
+All fields should be cast into the correct type for planned usage prior to making list.
+
+list Examples
+^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"list": {"fields": ["Full Name"],
+                    "args": ["First name", "Last Name"]}}
+    ],
+
 slice
 -----
 

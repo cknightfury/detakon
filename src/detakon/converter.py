@@ -208,6 +208,8 @@ class Detakon():
                 # process string operations
                 if operation.lower() in self.lang.get("join", ["join"]):
                     row = operations.string_join(field, row, *arguments, **keyword_arguments)
+                elif operation.lower() in self.lang.get("list", ["list", "make_list"]):
+                    row = operations.make_list(field, row, *arguments, **keyword_arguments)
                 elif operation in dir(str):
                     row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("slice", ["slice"]):

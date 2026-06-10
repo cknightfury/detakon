@@ -7,6 +7,16 @@
 from detakon.translation_framework import load_language
 from decimal import Decimal
 
+def make_list(field: str, row: dict, *args, **kwargs) -> dict:
+    """Make a list from all fields in args.  Specified field will be the destination, and any existing data will be overwritten.
+    
+    :param field: Field destination for list.
+    :param row: A dictionary of data that holds the fields to be operated on.
+    :param *args: Fields to append to list to be stored in destination field.
+    :param **kwargs: Keyword arguments to be passed."""
+    row[field] = [row[arg] for arg in args]
+    return row
+
 def string_join(field: str, row: dict, *args, **kwargs) -> dict:
     """Calls str.join on list in specified field and uses args[0] as the separator for the resulting string.  Return the updated row.
     
