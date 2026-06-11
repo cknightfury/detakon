@@ -261,6 +261,61 @@ String Method Examples
         {"join": {"fields": "filepath", "args": "_"}}
     ]
 
+Math Operations
+===============
+
+Math operations use the fields values as destinations of the operations.  Math operations are typically intended to have one value passed to fields.
+
+The operation is performed sequentially on each field passed to args, with the final output being assigned to the destination specified in fields.
+
+If a field in args contains a list, the operation is sequentially performed on each element of the list, before continuing to the next field.
+
+sum
+---
+
+Perform addition on each field passed to args to return the final sum to the specified field.
+
+All lists will be flattened and summed.
+
+By default, summation starts at 0.  To set a start value either:
+
+* Pass a field name for the start value to kwargs with the key "start_field"
+* Pass a number as the start value to kwargs with the key "start_value"
+
+sum Examples
+^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"sum": {"fields": ["Total"],
+                    "args": ["Subtotal", "Tax", "Shipping"]}}
+    ],
+
+
+subtract
+--------
+
+Perform subtraction on each field passed to args to return the final final to the specified field.
+
+All lists will be flattened and subtracted.
+
+By default, subtraction starts at 0.  To set a start value either:
+
+* Pass a field name for the start value to kwargs with the key "start_field"
+* Pass a number as the start value to kwargs with the key "start_value"
+
+subtract Examples
+^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"sum": {"fields": ["Total"],
+                    "args": ["Coupon"],
+                    "kwargs": {"start_field": "Subtotal"}}}
+    ],
+
 Complete Operations Section Examples
 ====================================
 
