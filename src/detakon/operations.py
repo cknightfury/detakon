@@ -200,3 +200,44 @@ def cast_type(value, data_type: str, *args, language_map: dict = load_language("
         return str(value)
     else:
         raise ValueError(f"Unrecognized type value for cast: {data_type}")
+
+###################
+# Math Operations #
+###################
+
+# Math operations use the fields values as destinations of the operations.
+# Math operations are typically intended to have one value passed to fields.
+# The operation is performed subsequently on each field passed to args, with the final output being assigned to the destination specified in fields.
+# If a field in args contains a list, the operation is sequentially performed on each element of the list, before continuing to the next field.
+
+def flatten_lists(element):
+    unflattened_list = list(element)
+    flatened_list = []
+    while unflattened_list:
+        element = unflattened_list.pop(0)
+        if isinstance(element, (list, tuple)):
+            unflattened_list = list(element) + unflattened_list
+        else:
+            flatened_list.append(element)
+    return flatened_list
+
+def sum_operation(field: str, row: dict, *args, **kwargs) -> dict:
+    """Sum each field in args, and return the total to the specified field.
+    
+    :param field: Field used as destination of calculation.
+    :param row: A dictionary of data that holds the fields to be operated on.
+    :param *args: List of fields the operation is to be performed on.
+    :param **kwargs: Keyword arguments to be passed."""
+
+    total = 0
+    for arg in args:
+        value = row[arg]
+        if isinstance(value, (list, tuple)):
+            total += sum(flatten_lists(value))
+        else:
+            items = []
+            items.append(value)
+            total += sum(items)
+
+    row[field] = separator.join(row[field])
+    return row
