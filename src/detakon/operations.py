@@ -239,5 +239,26 @@ def sum_operation(field: str, row: dict, *args, **kwargs) -> dict:
             items.append(value)
             total += sum(items)
 
-    row[field] = separator.join(row[field])
+    row[field] = total
+    return row
+
+def subtract_operation(field: str, row: dict, *args, **kwargs) -> dict:
+    """Sum each field in args, and return the total to the specified field.
+    
+    :param field: Field used as destination of calculation.
+    :param row: A dictionary of data that holds the fields to be operated on.
+    :param *args: List of fields the operation is to be performed on.
+    :param **kwargs: Keyword arguments to be passed."""
+
+    total = 0
+    for arg in args:
+        value = row[arg]
+        if isinstance(value, (list, tuple)):
+            total -= sum(flatten_lists(value))
+        else:
+            items = []
+            items.append(value)
+            total -= sum(items)
+
+    row[field] = total
     return row
