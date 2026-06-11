@@ -223,13 +223,24 @@ def flatten_lists(element):
 
 def sum_operation(field: str, row: dict, *args, **kwargs) -> dict:
     """Sum each field in args, and return the total to the specified field.
+
+    By default, summation starts at 0.  To set a start value either:
+
+    * Pass a field name for the start value to kwargs with the key "start_field"
+    * Pass a number as the start value to kwargs with the key "start_value"
     
     :param field: Field used as destination of calculation.
     :param row: A dictionary of data that holds the fields to be operated on.
     :param *args: List of fields the operation is to be performed on.
     :param **kwargs: Keyword arguments to be passed."""
 
-    total = 0
+    if "start_field" in kwargs:
+        total = kwargs["start_field"]
+    elif "start_value" in kwargs:
+        total = kwargs["start_value"]
+    else:
+        total = 0
+
     for arg in args:
         value = row[arg]
         if isinstance(value, (list, tuple)):
@@ -243,14 +254,25 @@ def sum_operation(field: str, row: dict, *args, **kwargs) -> dict:
     return row
 
 def subtract_operation(field: str, row: dict, *args, **kwargs) -> dict:
-    """Sum each field in args, and return the total to the specified field.
+    """Subtract each field in args, and return the total to the specified field.
     
+    By default, subtraction starts at 0.  To set a start value either:
+
+    * Pass a field name for the start value to kwargs with the key "start_field"
+    * Pass a number as the start value to kwargs with the key "start_value"
+
     :param field: Field used as destination of calculation.
     :param row: A dictionary of data that holds the fields to be operated on.
     :param *args: List of fields the operation is to be performed on.
     :param **kwargs: Keyword arguments to be passed."""
 
-    total = 0
+    if "start_field" in kwargs:
+        total = kwargs["start_field"]
+    elif "start_value" in kwargs:
+        total = kwargs["start_value"]
+    else:
+        total = 0
+
     for arg in args:
         value = row[arg]
         if isinstance(value, (list, tuple)):
