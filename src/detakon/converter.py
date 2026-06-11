@@ -234,6 +234,10 @@ class Detakon():
                     row = operations.duplicate_row(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("outofplace", ["change place", "change_place", "changeplace", "change-place", "outofplace", "out of place", "out-of-place", "out_of_place", "not-in-place", "not in place", "not_in_place"]):
                     row = operations.change_place(field, row, arguments[0], arguments[1], arguments[2:], keyword_arguments, language_map=self.lang)
+                elif operation.lower() in self.lang.get("sum", ["sum", "add", "+", "addition"]):
+                    row = operations.sum_operation(field, row, *arguments, **keyword_arguments)
+                elif operation.lower() in self.lang.get("subtract", ["subtract", "difference", "-", "subtraction"]):
+                    row = operations.sum_operation(field, row, *arguments, **keyword_arguments)
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:
                     pass
