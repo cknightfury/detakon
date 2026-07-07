@@ -96,8 +96,8 @@ Create Field Example
         {"create": {"fields": "Total"}
     ]
 
-datetime
---------
+to_datetime
+-----------
 Use Python's datetime library to convert a string into a date, datetime, or time object.
 
 kwargs:
@@ -109,7 +109,7 @@ kwargs:
     * 'datetime' (default)
     * 'time'
 
-datetime and stringdate operations must be called in sequence.
+to_datetime and from_datetime operations must be called in sequence.
 
 datetime Example
 ^^^^^^^^^^^^^^^^^^^^
@@ -117,12 +117,12 @@ datetime Example
 .. code-block:: json-object
 
     "Operations": [
-        {"datetime": {"fields": ["Invoice Date"],
+        {"to_datetime": {"fields": ["Invoice Date"],
                     "kwargs": {"format": "%m/%d/%Y", "type": "date"}}},
     ]
 
-stringdate
-----------
+from_datetime
+-------------
 
 User Python's datetime library to convert a date, datetime, or time object to a string.
 
@@ -132,7 +132,7 @@ kwargs:
     * See python datetime documentation for format string options.
     * Can optionally provide strings: 'isodate', 'isodatetime', 'isotime' instead of a format string.
 
-datetime and stringdate operations must be called in sequence.
+to_datetime and from_datetime operations must be called in sequence.
 
 stringdate Example
 ^^^^^^^^^^^^^^^^^^^^
@@ -140,7 +140,7 @@ stringdate Example
 .. code-block:: json-object
 
     "Operations": [
-        {"datestring": {"fields": ["Invoice Date"],
+        {"from_datetime": {"fields": ["Invoice Date"],
                     "kwargs": {"format": "isodate"}}}
     ]
 

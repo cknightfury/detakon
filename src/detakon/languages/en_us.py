@@ -33,8 +33,8 @@ translation = {
         "filter_less_or_equal": ["le", "less or equal", "less than or equal", "<=", "≤"],
         "filter_boolean": ["bool", "boolean", "truthiness", "truthy", "falsy"],
         "filter_none": ["isnone", "none"],
-        "datetime": ["date", "datetime", "time", "stringdate", "string_to_datetime", "string to datetime"],
-        "datestring": ["datestring", "datetime_to_string", "datetime to string"],
+        "datetime": ["to_datetime", "to datetime","date", "datetime", "time", "string_to_datetime", "string to datetime", "to_date", "to date", "to_time", "to time", "todatetime", "todate", "totime"],
+        "datestring": ["from_datetime", "from datetime", "datestring", "datetime_to_string", "datetime to string", "from_date", "from date", "from_time", "from time", "fromdatetime", "fromdate", "fromtime"],
         # Type casting
         "cast_int": ["int", "integer", "long"],
         "cast_float": ["float", "double"],

@@ -238,9 +238,9 @@ class Detakon():
                     row = operations.sum_operation(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("subtract", ["subtract", "difference", "-", "subtraction"]):
                     row = operations.subtract_operation(field, row, *arguments, **keyword_arguments)
-                elif operation.lower() in self.lang.get("datetime", ["date", "datetime", "time", "string_to_datetime", "string to datetime"]):
+                elif operation.lower() in self.lang.get("to_datetime", ["to_datetime", "to datetime","date", "datetime", "time", "string_to_datetime", "string to datetime", "to_date", "to date", "to_time", "to time", "todatetime", "todate", "totime"]):
                     row = operations.string_to_datetime(field, row, *arguments, **keyword_arguments)
-                elif operation.lower() in self.lang.get("datestring", ["datestring", "datetime_to_string", "datetime to string"]):
+                elif operation.lower() in self.lang.get("from_datetime", ["from_datetime", "from datetime", "datestring", "datetime_to_string", "datetime to string", "from_date", "from date", "from_time", "from time", "fromdatetime", "fromdate", "fromtime"]):
                     row = operations.datetime_to_string(field, row, *arguments, **keyword_arguments)
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:
