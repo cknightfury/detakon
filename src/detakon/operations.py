@@ -223,9 +223,9 @@ def string_to_datetime(field: str, row: dict, *args, **kwargs) -> dict:
 
     # considering using match statement - but match introduced in Python 3.10 - would need to update version minimum
     if output_type == 'date':
-        row[field] = date.strptime(row[field], format_string)
+        row[field] = datetime.strptime(row[field], format_string).date()
     elif output_type == 'time':
-        row[field] = time.strptime(row[field], format_string)
+        row[field] = datetime.strptime(row[field], format_string).time()
     else:
         row[field] = datetime.strptime(row[field], format_string)
 
