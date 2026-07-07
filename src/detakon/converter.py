@@ -237,7 +237,7 @@ class Detakon():
                 elif operation.lower() in self.lang.get("sum", ["sum", "add", "+", "addition"]):
                     row = operations.sum_operation(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("subtract", ["subtract", "difference", "-", "subtraction"]):
-                    row = operations.sum_operation(field, row, *arguments, **keyword_arguments)
+                    row = operations.subtract_operation(field, row, *arguments, **keyword_arguments)
                 # below operations are place holders, and may change operation names during implementation
                 elif operation.lower() in ["mergefields", "merge", "union"]:
                     pass
