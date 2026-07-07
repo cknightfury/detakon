@@ -96,6 +96,54 @@ Create Field Example
         {"create": {"fields": "Total"}
     ]
 
+datetime
+--------
+Use Python's datetime library to convert a string into a date, datetime, or time object.
+
+kwargs:
+
+* 'format' - format string (required)
+    * See python datetime documentation for format string options.
+* 'type' - the type of object you would like to convert to.
+    * 'date'
+    * 'datetime' (default)
+    * 'time'
+
+datetime and stringdate operations must be called in sequence.
+
+datetime Example
+^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"datetime": {"fields": ["Invoice Date"],
+                    "kwargs": {"format": "%m/%d/%Y", "type": "date"}}},
+    ]
+
+stringdate
+----------
+
+User Python's datetime library to convert a date, datetime, or time object to a string.
+
+kwargs:
+
+* 'format' - format string (required)
+    * See python datetime documentation for format string options.
+    * Can optionally provide strings: 'isodate', 'isodatetime', 'isotime' instead of a format string.
+
+datetime and stringdate operations must be called in sequence.
+
+stringdate Example
+^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: json-object
+
+    "Operations": [
+        {"datestring": {"fields": ["Invoice Date"],
+                    "kwargs": {"format": "isodate"}}}
+    ]
+
 duplicate
 ---------
 
