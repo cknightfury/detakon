@@ -6,6 +6,7 @@
 
 from detakon.translation_framework import load_language
 from decimal import Decimal
+from datetime import date, datetime, time
 
 def make_list(field: str, row: dict, *args, **kwargs) -> dict:
     """Make a list from all fields in args.  Specified field will be the destination, and any existing data will be overwritten.
@@ -200,6 +201,75 @@ def cast_type(value, data_type: str, *args, language_map: dict = load_language("
         return str(value)
     else:
         raise ValueError(f"Unrecognized type value for cast: {data_type}")
+
+############################
+# Date and Time Operations #
+############################
+
+def string_to_datetime(field: str, row: dict, *args, **kwargs) -> dict:
+    """Change field string into Date object.
+
+    kwargs:
+
+    * 'format' containing format string for date object (required).
+    * 'type' - String for type of object to output ('date', 'datetime', 'time').  Defaults to datetime.
+
+    :param field: The key for the value being converted.
+    :param row: A dictionary of data that holds the field to be converted.
+    :param *args: Arguments being passed.
+    :param **kwargs: Keyword arguments to be passed."""
+    format_string = kwargs["format"]
+    output_type = kwargs["type"]
+
+    # considering using match statement - but match introduced in Python 3.10 - would need to update version minimum
+    if output_type == 'date':
+        row[field] = date.strptime(row[field], format_string)
+    elif output_type == 'time':
+        row[field] = time.strptime(row[field], format_string)
+    else:
+        row[field] = datetime.strptime(row[field], format_string)
+
+    return row
+
+def datetime_to_string(field: str, row: dict, *args, **kwargs) -> dict:
+    """Change field date, datetime, or time object into a string.
+
+    kwargs:
+
+    * 'format' containing format string to output to.
+
+    Special codes for 'format' to call isoformat().  See respective module for additional details:
+
+    * 'iso' - Call respective isoformat() for type field is instance of.
+    * 'isodate' - 'YYYY-MM-DD'
+    * 'isodatetime' - 'YYYY-MM-DDTHH:MM:SS.ffffff' or 'YYYY-MM-DDTHH:MM:SS'.
+    * 'isotime' - 'HH:MM:SS.ffffff' or 'HH:MM:SS'
+
+    :param field: The key for the value being converted.
+    :param row: A dictionary of data that holds the field to be converted.
+    :param *args: Arguments being passed.
+    :param **kwargs: Keyword arguments to be passed."""
+    format_string = kwargs["format"]
+
+    if isinstance(row[field], date):
+        if format_string == 'isodate':
+            row[field] = row[field].isoformat()
+        else:
+            row[field] = row[field].strftime(format_string)
+    elif isinstance(row[field], datetime):
+        if format_string == 'isodatetime':
+            row[field] = row[field].isoformat()
+        else:
+            row[field] = row[field].strftime(format_string)
+    elif isinstance(row[field], time):
+        if format_string == 'isotime':
+            row[field] = row[field].isoformat()
+        else:
+            row[field] = row[field].strftime(format_string)
+    else:
+        return datetime(row[field]).isoformat()
+    
+    return row
 
 ###################
 # Math Operations #
