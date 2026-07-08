@@ -139,6 +139,11 @@ class Detakon():
                                         encoding=self.source_info.get("encoding", "utf-8"),
                                         errors=self.source_info.get("errors", None),
                                         newline=self.source_info.get("newline", None)) as source_file:
+
+                    # skip number of lines if source section configured to skip lines (typically for metadata)
+                    if "skiplines" in self.source_info.keys():
+                        for _ in range(self.source_info.get("skiplines", 0)):
+                            next(source_file)
                     # handler for source.format csv values.  if no source.format value is provided, csv value is default
                     if self.source_info.get("format", "csv") == "csv":
                         # DictReader defaults are used if Source does not contain a key for a given keyword.
@@ -211,7 +216,9 @@ class Detakon():
                 elif operation.lower() in self.lang.get("list", ["list", "make_list"]):
                     row = operations.make_list(field, row, *arguments, **keyword_arguments)
                 elif operation in dir(str):
+                    # print(f"before {operation}: {row[field]}")
                     row[field] = getattr(row[field], operation)(*arguments, **keyword_arguments)
+                    # print(f"after: {row[field]}")
                 elif operation.lower() in self.lang.get("slice", ["slice"]):
                     row = operations.slice_field(field, row, *arguments, **keyword_arguments)
                 elif operation.lower() in self.lang.get("hashmap", ["hashmap", "dictionary", "dict"]):
