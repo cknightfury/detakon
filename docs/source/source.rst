@@ -64,6 +64,13 @@ This setting is required.
 
     See the Python Docs for `DictReader <https://docs.python.org/3/library/csv.html#csv.DictReader>`_ for more details.
 
+skiplines
+---------
+
+The ``skiplines`` setting skips X number of lines before opening the file in DictReader.
+
+This is intended for skipping lines before the header, such as metadata.
+
 Examples
 ========
 

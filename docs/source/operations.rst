@@ -111,8 +111,8 @@ kwargs:
 
 to_datetime and from_datetime operations must be called in sequence.
 
-datetime Example
-^^^^^^^^^^^^^^^^^^^^
+to_datetime Example
+^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: json-object
 
@@ -134,8 +134,8 @@ kwargs:
 
 to_datetime and from_datetime operations must be called in sequence.
 
-stringdate Example
-^^^^^^^^^^^^^^^^^^^^
+from_datetime Example
+^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: json-object
 
