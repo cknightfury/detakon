@@ -67,7 +67,7 @@ This setting is required.
 skiplines
 ---------
 
-The ``skiplines`` setting skips X number of lines before opening the file in DictReader.
+The ``skiplines`` setting skips X number of lines before opening the file in DictReader.  Argument must be an integer.
 
 This is intended for skipping lines before the header, such as metadata.
 
