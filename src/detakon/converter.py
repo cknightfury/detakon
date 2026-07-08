@@ -154,7 +154,7 @@ class Detakon():
                                                 restkey=self.source_info.get("restkey", None),
                                                 restval=self.source_info.get("restval", None),
                                                 dialect=self.source_info.get("dialect", "excel"),
-                                                delimiter=self.source_info.get("separator", ","),
+                                                delimiter=self.source_info.get("delimiter", ","),
                                                 quotechar=self.source_info.get("quotechar", '"'),
                                                 escapechar=self.source_info.get("escapechar", None),
                                                 doublequote=self.source_info.get("doublequote", True),
